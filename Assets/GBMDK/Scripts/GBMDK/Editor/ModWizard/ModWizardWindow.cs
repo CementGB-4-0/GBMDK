@@ -19,13 +19,15 @@ namespace GBMDK.Editor
         private void OnAddButtonPressed()
         {
             ModWizardCore.CreateMod();
+            Repaint();
         }
 
         private void OnRemoveButtonPressed()
         {
             if (selectedModSettings != null)
             {
-
+                ModWizardCore.RemoveMod();
+                Repaint();
             }
         }
 
@@ -51,12 +53,14 @@ namespace GBMDK.Editor
             {
                 GUILayout.BeginScrollView(Vector2.zero);
 
-                foreach (var mod in ModWizardCore.Mods.Keys)
+                foreach (var mod in ModWizardCore.Mods)
                 {
                     GUILayout.BeginHorizontal();
 
-                    mod.currentlyActive = GUILayout.Toggle(mod.currentlyActive, "Set Active");
-                    GUILayout.Label(mod.name, EditorStyles.boldLabel);
+                    var modInfo = ModWizardCore.GetMod(mod.Key);
+
+                    modInfo.CurrentlyActive = GUILayout.Toggle(modInfo.CurrentlyActive, "Set Active");
+                    GUILayout.Label(mod.Key, EditorStyles.boldLabel);
 
                     GUILayout.EndHorizontal();
                 }
