@@ -31,3 +31,5 @@ All Gang Beasts code is stripped from the ripped scripts. These scripts must ONL
 - [@EthanJamesBarron](https://github.com/EthanJamesBarron) for Gang Beasts codebase knowledge
 - [@Fizzyhex](https://github.com/Fizzyhex) for original Quick Asset Migrator **(not affiliated)**
 - [@zCubed3](https://github.com/zCubed3) for original Asset Migrator executable **(not affiliated)**
+- [@minimack_studios](https://github.com/MinimackStudios) for early testing and troubleshooting
+- [@konradKG25](https://github.com/konradKG25) for original MapTester script
