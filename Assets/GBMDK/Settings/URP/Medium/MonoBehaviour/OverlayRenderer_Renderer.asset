@@ -23,10 +23,10 @@ MonoBehaviour:
     blitPS: {fileID: 4800000, guid: 06c17292a4e677e4e9814a7ed7c4e836, type: 3}
     copyDepthPS: {fileID: 4800000, guid: 1c4e0f71e2b08774eb0f1a114239aeeb, type: 3}
     screenSpaceShadowPS: {fileID: 4800000, guid: bc2539e388667a742b0d9723f3b03611, type: 3}
-    samplingPS: {fileID: 4800000, guid: 9e8e94420dcdc7d4483494590783ef21, type: 3}
+    samplingPS: {fileID: 4800000, guid: 04c410c9937594faa893a11dceb85f7e, type: 3}
     stencilDeferredPS: {fileID: 4800000, guid: c934c06d94a3c2e4fac7a69b6efed8c1, type: 3}
-    fallbackErrorPS: {fileID: 4800000, guid: fb61bef75a4cbde4a9f341c13ef6d653, type: 3}
-    materialErrorPS: {fileID: 4800000, guid: 1c6340f095afa3c4a8976c006411805e, type: 3}
+    fallbackErrorPS: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
+    materialErrorPS: {fileID: 4800000, guid: 5fd9a8feb75a4b5894c241777f519d4e, type: 3}
     coreBlitPS: {fileID: 4800000, guid: c6d1e8331289a3841a5e266841fc01f9, type: 3}
     coreBlitColorAndDepthPS: {fileID: 4800000, guid: 1e35a75883c0b184fa8b2e8daa587ad3, type: 3}
     cameraMotionVector: {fileID: 4800000, guid: 49738884d9c8eea45959ceeaad328c42, type: 3}
