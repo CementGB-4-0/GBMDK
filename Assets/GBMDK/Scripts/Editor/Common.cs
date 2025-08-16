@@ -20,7 +20,7 @@ namespace GBMDK.Editor
         public static T CreateAndSaveScriptableObject<T>() where T : ScriptableObject
         {
             var scriptableObject = ScriptableObject.CreateInstance<T>();
-            AssetDatabase.CreateAsset(scriptableObject, GetCurrentSelectedAssetPath() + $"/New {typeof(T)}");
+            AssetDatabase.CreateAsset(scriptableObject, GetCurrentSelectedAssetPath() + $"/New {typeof(T)}.asset");
             EditorUtility.SetDirty(scriptableObject);
             Undo.RecordObject(scriptableObject, "CreateAndSaveScriptableObject");
                 
