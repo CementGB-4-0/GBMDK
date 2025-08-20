@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.SceneManagement;
 using UnityEditor.SceneTemplate;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace GBMDK.Editor
 {
     public class ContentStarters
     {
-        private static void MarkAddressable(string assetPath, string assetAddress)
+        private static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress)
         {
             var settings = AddressableAssetSettingsDefaultObject.Settings;
             var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath), settings.DefaultGroup);
@@ -21,6 +22,7 @@ namespace GBMDK.Editor
 
             EditorUtility.SetDirty(settings);
             AssetDatabase.SaveAssets();
+            return entry;
         }
         
         [MenuItem("Assets/GBMDK/Starters/Costume Starter", priority = 10000)] 
@@ -62,7 +64,8 @@ namespace GBMDK.Editor
             AssetDatabase.CreateAsset(costumeData, dataPath);
             EditorUtility.SetDirty(costumeData);
 
-            MarkAddressable(dataPath, Path.GetFileNameWithoutExtension(dataPath));
+            var addrEntryData = MarkAddressable(dataPath, Path.GetFileNameWithoutExtension(dataPath));
+            addrEntryData.labels.Add("CostumeItem");
 
             AssetDatabase.SaveAssets();
             EditorUtility.FocusProjectWindow();
