@@ -3,8 +3,8 @@ using UnityEngine;
 namespace Cinemachine
 {
 	[ExecuteInEditMode]
-	[SaveDuringPlay]
 	[AddComponentMenu(null)]
+	[SaveDuringPlay]
 	public class GangBeastsGroupComposer : CinemachineComposer
 	{
 		public enum FramingMode
@@ -21,8 +21,8 @@ namespace Cinemachine
 			DollyThenZoom = 2
 		}
 
-		[Tooltip("The bounding box of the targets should occupy this amount of the screen space.  1 means fill the whole screen.  0.5 means fill half the screen, etc.")]
 		[Space]
+		[Tooltip("The bounding box of the targets should occupy this amount of the screen space.  1 means fill the whole screen.  0.5 means fill half the screen, etc.")]
 		public float m_GroupFramingSize;
 
 		[Tooltip("What screen dimensions to consider when framing.  Can be Horizontal, Vertical, or both")]
@@ -47,8 +47,8 @@ namespace Cinemachine
 		[Tooltip("Set this to limit how far from the target the camera can get.")]
 		public float m_MaximumDistance;
 
-		[Tooltip("If adjusting FOV, will not set the FOV lower than this.")]
 		[Range(1f, 179f)]
+		[Tooltip("If adjusting FOV, will not set the FOV lower than this.")]
 		public float m_MinimumFOV;
 
 		[Range(1f, 179f)]

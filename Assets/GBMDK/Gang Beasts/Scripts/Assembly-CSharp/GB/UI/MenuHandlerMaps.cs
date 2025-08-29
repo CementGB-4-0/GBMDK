@@ -11,6 +11,8 @@ namespace GB.UI
 
 		public TextMeshProUGUI mapValueText;
 
+		public bool AllowChange;
+
 		private int currentMapIndex;
 
 		public int MapIndex

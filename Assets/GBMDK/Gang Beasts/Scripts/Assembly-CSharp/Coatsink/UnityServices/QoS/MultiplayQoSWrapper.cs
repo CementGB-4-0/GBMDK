@@ -11,7 +11,7 @@ namespace Coatsink.UnityServices.QoS
 {
 	public class MultiplayQoSWrapper
 	{
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CStartQosDiscoveryAsync_003Ed__17 : IAsyncStateMachine
 		{
@@ -45,7 +45,7 @@ namespace Coatsink.UnityServices.QoS
 			}
 		}
 
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CStartQosDiscoveryInternal_003Ed__18 : IAsyncStateMachine
 		{

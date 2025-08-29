@@ -172,8 +172,8 @@ public class ScreenSpaceReflections : ScriptableRendererFeature
 	[Tooltip("Maximum distance to traverse after which it will stop drawing reflections.")]
 	public float maximumMarchDistance;
 
-	[Range(0f, 1f)]
 	[Tooltip("Fades reflections close to the near planes.")]
+	[Range(0f, 1f)]
 	public float distanceFade;
 
 	[Range(0f, 1f)]

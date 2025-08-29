@@ -75,8 +75,8 @@ namespace GB.Game.AI
 		[SerializeField]
 		private OnActorEventBase _onCompleteEventTrigger;
 
-		[SerializeField]
 		[Tooltip("AI behaviours added will be executed in the order provided")]
+		[SerializeField]
 		private List<AIBehaviourBase> _aiObjectivesQueue;
 
 		private Coroutine _aiObjectivesCoroutine;

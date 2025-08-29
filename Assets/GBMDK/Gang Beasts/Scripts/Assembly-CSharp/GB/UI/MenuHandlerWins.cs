@@ -20,6 +20,8 @@ namespace GB.UI
 
 		public LocalizeStringEvent valueString;
 
+		public bool AllowChange;
+
 		private Dictionary<GameModeEnum, int> perModeIndices;
 
 		private GameModeEnum currentMode;

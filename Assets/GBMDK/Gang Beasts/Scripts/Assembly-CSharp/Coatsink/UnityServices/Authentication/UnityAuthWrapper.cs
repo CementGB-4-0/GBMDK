@@ -7,7 +7,7 @@ namespace Coatsink.UnityServices.Authentication
 {
 	public static class UnityAuthWrapper
 	{
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CDoAuth_003Ed__4 : IAsyncStateMachine
 		{
@@ -43,7 +43,7 @@ namespace Coatsink.UnityServices.Authentication
 			}
 		}
 
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CAuthenticating_003Ed__6 : IAsyncStateMachine
 		{
@@ -75,7 +75,7 @@ namespace Coatsink.UnityServices.Authentication
 			}
 		}
 
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CSignInAnonymouslyAsync_003Ed__7 : IAsyncStateMachine
 		{

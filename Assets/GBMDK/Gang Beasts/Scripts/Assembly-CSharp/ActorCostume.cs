@@ -412,8 +412,8 @@ public class ActorCostume : NetworkBehaviour
 	[SerializeField]
 	private List<ApplyedCostume> ApplyedCostumes;
 
-	[SerializeField]
 	[HideInInspector]
+	[SerializeField]
 	private string _costumePresetName;
 
 	[SerializeField]

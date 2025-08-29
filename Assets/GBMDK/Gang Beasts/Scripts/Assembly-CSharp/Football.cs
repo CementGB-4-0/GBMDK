@@ -61,6 +61,10 @@ public class Football : NetworkBehaviour
 
 	private float _goldenShrinkRateY;
 
+	public Material defaultMaterial;
+
+	public Material overtimeMaterial;
+
 	private static int kRpcRpcSetBallColor;
 
 	private static int kRpcRpcOnBallPopped;

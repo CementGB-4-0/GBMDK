@@ -17,15 +17,15 @@ namespace GB.Game
 		[SerializeField]
 		private bool _despawn;
 
-		[SerializeField]
 		[EnumUtils.EnumFlags]
+		[SerializeField]
 		private GameModeEnum _neededMode;
 
 		[SerializeField]
 		private int _gangID;
 
-		[SerializeField]
 		[EnumUtils.EnumFlags]
+		[SerializeField]
 		private ControlledTypes _neededController;
 
 		[SerializeField]

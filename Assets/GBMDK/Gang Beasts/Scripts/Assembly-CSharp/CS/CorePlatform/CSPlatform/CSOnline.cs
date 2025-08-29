@@ -1,15 +1,13 @@
 using System.Collections.Generic;
-using CS.CorePlatform.Base.Client.Part;
 using CS.CorePlatform.Utils.Data;
 using Coatsink.Platform;
 using Coatsink.Platform.Systems.Online;
-using Coatsink.Platform.Systems.Online.Connections;
 using Coatsink.Platform.Systems.User;
 using Coatsink.Platform.Utils;
 
 namespace CS.CorePlatform.CSPlatform
 {
-	public class CSOnline : BasePostBox<UserInfo>
+	public class CSOnline
 	{
 		private struct MessageQueue
 		{
@@ -45,17 +43,13 @@ namespace CS.CorePlatform.CSPlatform
 
 		private int _sendTry;
 
-		private bool _fullyJoined;
-
 		private int skipCounter;
 
 		private int eventCounter;
 
 		private List<UserInfo> lobbyStatusCache;
 
-		private List<BaseUserInfo> _connectedUsers;
-
-		private List<UserInfo> _userInfoCache;
+		private List<BaseUserInfo> _lobbyUsers;
 
 		private BaseUserInfo _host;
 
@@ -74,8 +68,6 @@ namespace CS.CorePlatform.CSPlatform
 		private ITaskResult _currentTask;
 
 		private ILobby _currentLobby;
-
-		private LobbyTransporter _lobbyMessages;
 
 		private object _sendLocker;
 
@@ -112,11 +104,7 @@ namespace CS.CorePlatform.CSPlatform
 		{
 		}
 
-		private void CheckFullyJoined()
-		{
-		}
-
-		private void CheckConnected(UserInfo user, bool checkFully = true)
+		public void OnlineUpdate()
 		{
 		}
 
@@ -160,7 +148,7 @@ namespace CS.CorePlatform.CSPlatform
 		{
 		}
 
-		public void JoinLobby(ILobbyID id)
+		public void JoinLobby(ILobbyID id, string joinCode = null)
 		{
 		}
 
@@ -236,32 +224,23 @@ namespace CS.CorePlatform.CSPlatform
 			return false;
 		}
 
-		public bool MessageConnectionReady(BaseUserInfo userInfo)
-		{
-			return false;
-		}
-
-		public override void SendNewMessage(UserInfo userID, byte[] message, int size, bool reliable)
-		{
-		}
-
-		private void SendWaitingMessages()
-		{
-		}
-
-		protected override bool GetMessage(ref UserInfo senderID, out DataReader message)
-		{
-			message = null;
-			return false;
-		}
-
-		protected override void ParseMessage(UserInfo senderID, DataReader message)
+		private void SendRawMessage(UserInfo cSInfo, PlatformMessageBase message, bool v)
 		{
 		}
 
 		public string LobbyStatus()
 		{
 			return null;
+		}
+
+		private BaseUserInfo GetExistingUserDetailsInLobby(UserInfo userInfo)
+		{
+			return default(BaseUserInfo);
+		}
+
+		private BaseUserInfo GetNewUserDetailsInLobby(UserInfo userInfo)
+		{
+			return default(BaseUserInfo);
 		}
 	}
 }

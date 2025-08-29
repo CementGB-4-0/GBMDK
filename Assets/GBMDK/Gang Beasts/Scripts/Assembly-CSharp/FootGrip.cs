@@ -15,4 +15,8 @@ public class FootGrip : MonoBehaviour
 	private void OnCollisionEnter(Collision collision)
 	{
 	}
+
+	private void AddFixedJoint(Rigidbody connectedTarget)
+	{
+	}
 }

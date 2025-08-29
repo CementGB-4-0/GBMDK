@@ -176,8 +176,8 @@ namespace GB.Achievements
 		[Tooltip("How long this condition should check for")]
 		public float Timer;
 
-		[SerializeField]
 		[Tooltip("A Permanence condition must always be met to pass - \r\n a non-Permanence condition must only be met at the end of the timeout.")]
+		[SerializeField]
 		public bool Permanence;
 
 		[SerializeField]

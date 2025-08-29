@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Coatsink.Common
 {
-	[StructLayout(LayoutKind.Explicit)]
+	[StructLayout((LayoutKind)2)]
 	public struct primitive
 	{
 		[FieldOffset(0)]

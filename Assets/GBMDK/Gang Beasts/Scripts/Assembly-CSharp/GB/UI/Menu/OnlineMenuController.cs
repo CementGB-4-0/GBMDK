@@ -1,5 +1,6 @@
 using System;
 using CS.CorePlatform;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -27,11 +28,32 @@ namespace GB.UI.Menu
 		[SerializeField]
 		private BaseMenuScreen[] _clientScreens;
 
+		[SerializeField]
+		private TMP_Text joinCodeDisplayText;
+
+		public string JoinCodeInput;
+
 		public void CreateLobby()
 		{
 		}
 
 		private void CreateLobbyInternal()
+		{
+		}
+
+		public void JoinLobbyViaCode()
+		{
+		}
+
+		private void JoinLobbyViaCodeInternal()
+		{
+		}
+
+		public void OnJoinCodeInputChanged(string value)
+		{
+		}
+
+		private void UpdateLobbyCodeText()
 		{
 		}
 

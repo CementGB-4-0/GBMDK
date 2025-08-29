@@ -51,7 +51,7 @@ public class InteractableObject : MonoBehaviour
 	}
 
 	[CompilerGenerated]
-	private sealed class _003CDelayedRegisterInteractableObjectAndChildren_003Ed__87 : IEnumerator<object>, IEnumerator, IDisposable
+	private sealed class _003CDelayedRegisterInteractableObjectAndChildren_003Ed__88 : IEnumerator<object>, IEnumerator, IDisposable
 	{
 		private int _003C_003E1__state;
 
@@ -78,7 +78,7 @@ public class InteractableObject : MonoBehaviour
 		}
 
 		[DebuggerHidden]
-		public _003CDelayedRegisterInteractableObjectAndChildren_003Ed__87(int _003C_003E1__state)
+		public _003CDelayedRegisterInteractableObjectAndChildren_003Ed__88(int _003C_003E1__state)
 		{
 		}
 
@@ -104,12 +104,12 @@ public class InteractableObject : MonoBehaviour
 		}
 	}
 
-	[FormerlySerializedAs("priorityModifier")]
 	[HideInInspector]
+	[FormerlySerializedAs("priorityModifier")]
 	public Priority legacyPriorityModifier;
 
-	[FormerlySerializedAs("grabModifier")]
 	[HideInInspector]
+	[FormerlySerializedAs("grabModifier")]
 	public Grab legacyGrabModifier;
 
 	[HideInInspector]
@@ -121,12 +121,12 @@ public class InteractableObject : MonoBehaviour
 	[FormerlySerializedAs("partOfRagdoll")]
 	public bool legacyPartOfRagdoll;
 
-	[HideInInspector]
 	[FormerlySerializedAs("cachedTransform")]
+	[HideInInspector]
 	public Transform legacyCachedTransform;
 
-	[FormerlySerializedAs("cachedRigidbody")]
 	[HideInInspector]
+	[FormerlySerializedAs("cachedRigidbody")]
 	public Rigidbody legacyCachedRigidbody;
 
 	[FormerlySerializedAs("cachedColliders")]
@@ -137,17 +137,17 @@ public class InteractableObject : MonoBehaviour
 	[HideInInspector]
 	public bool legacyCheckVelocity;
 
-	[FormerlySerializedAs("alwaysDrain")]
 	[HideInInspector]
+	[FormerlySerializedAs("alwaysDrain")]
 	public bool legacyAlwaysDrain;
 
 	[FormerlySerializedAs("movingPlatform")]
 	[HideInInspector]
 	public bool legacyMovingPlatform;
 
-	[HideInInspector]
-	[Tooltip("Enable if we want to trigger the budbud voice effect if held")]
 	[FormerlySerializedAs("triggerBudBud")]
+	[Tooltip("Enable if we want to trigger the budbud voice effect if held")]
+	[HideInInspector]
 	public bool legacyTriggerBudBud;
 
 	public InteractableObjectData interactableObjectData;
@@ -158,6 +158,8 @@ public class InteractableObject : MonoBehaviour
 
 	[HideInInspector]
 	public static float offset;
+
+	public GrabEvent[] connectedGrabEvents;
 
 	public Priority priorityModifier
 	{
@@ -418,7 +420,7 @@ public class InteractableObject : MonoBehaviour
 	{
 	}
 
-	[IteratorStateMachine(typeof(_003CDelayedRegisterInteractableObjectAndChildren_003Ed__87))]
+	[IteratorStateMachine(typeof(_003CDelayedRegisterInteractableObjectAndChildren_003Ed__88))]
 	private IEnumerator DelayedRegisterInteractableObjectAndChildren()
 	{
 		return null;
@@ -429,6 +431,10 @@ public class InteractableObject : MonoBehaviour
 	}
 
 	public void PopulateChildrenWithCurrentValues()
+	{
+	}
+
+	public void SignalOnGrab(Joint connectedJoint)
 	{
 	}
 }

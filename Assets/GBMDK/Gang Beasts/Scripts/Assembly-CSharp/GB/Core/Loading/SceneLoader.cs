@@ -247,8 +247,4 @@ namespace GB.Core.Loading
 			return false;
 		}
 	}
-
-	internal interface ILoadingSystem
-	{
-	}
 }

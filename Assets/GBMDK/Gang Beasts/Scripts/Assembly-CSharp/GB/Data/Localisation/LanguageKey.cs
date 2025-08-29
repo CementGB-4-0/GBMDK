@@ -5,8 +5,8 @@ using UnityEngine.Localization.Metadata;
 namespace GB.Data.Localisation
 {
 	[Serializable]
-	[DisplayName("Language Key", null)]
 	[Metadata(AllowedTypes = MetadataType.StringTable)]
+	[DisplayName("Language Key", null)]
 	public class LanguageKey : IMetadata
 	{
 		public string name;

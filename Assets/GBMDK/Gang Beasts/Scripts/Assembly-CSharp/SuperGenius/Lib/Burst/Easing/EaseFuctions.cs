@@ -3,7 +3,7 @@ using Unity.Burst;
 
 namespace SuperGenius.Lib.Burst.Easing
 {
-	[StructLayout(LayoutKind.Sequential, Size = 1)]
+	[StructLayout((LayoutKind)0, Size = 1)]
 	[BurstCompile]
 	public struct EaseFuctions
 	{

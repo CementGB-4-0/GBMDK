@@ -29,8 +29,8 @@ namespace CoreNet.StateSync.Triggers
 		[Tooltip("If a hat is not correctly oriented by default, set it's local forward here")]
 		private Vector3 hatLocalForward;
 
-		[SerializeField]
 		[Tooltip("if a hat is not correcly oriented by default, set it's local up here")]
+		[SerializeField]
 		private Vector3 hatLocalUp;
 
 		[SerializeField]

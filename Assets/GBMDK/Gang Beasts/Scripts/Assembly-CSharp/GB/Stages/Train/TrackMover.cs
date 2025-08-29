@@ -19,8 +19,8 @@ namespace GB.Stages.Train
 		[SerializeField]
 		private TrackPool.Direction[] _spawnOptions;
 
-		[Header("Random Logic")]
 		[SerializeField]
+		[Header("Random Logic")]
 		private GameObject[] _props;
 
 		[SerializeField]

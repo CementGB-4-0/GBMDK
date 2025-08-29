@@ -6,7 +6,7 @@ using Unity.Mathematics;
 
 namespace SuperGenius.Lib.Burst.MeshModification
 {
-	[StructLayout(LayoutKind.Sequential, Size = 1)]
+	[StructLayout((LayoutKind)0, Size = 1)]
 	[BurstCompile]
 	public struct MeshCut
 	{

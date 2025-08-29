@@ -138,8 +138,8 @@ namespace GB.Core.Loading
 		[SerializeField]
 		public HintArchive hintArchive;
 
-		[HideInInspector]
 		[SerializeField]
+		[HideInInspector]
 		private ManuallySerializedData _derializedData;
 
 		public void OnBeforeSerialize()

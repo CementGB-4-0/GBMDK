@@ -17,7 +17,7 @@ namespace Coatsink.UnityServices.Matchmaking
 			Started = 2
 		}
 
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CSubscribeAndAwaitMatchmakerAllocation_003Ed__18 : IAsyncStateMachine
 		{
@@ -55,7 +55,7 @@ namespace Coatsink.UnityServices.Matchmaking
 			}
 		}
 
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CAwaitAllocationID_003Ed__19 : IAsyncStateMachine
 		{
@@ -91,7 +91,7 @@ namespace Coatsink.UnityServices.Matchmaking
 			}
 		}
 
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CGetMatchmakerAllocationPayloadAsync_003Ed__20 : IAsyncStateMachine
 		{
