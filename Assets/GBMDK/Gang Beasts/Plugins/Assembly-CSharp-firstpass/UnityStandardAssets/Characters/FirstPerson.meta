@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Assets/GBMDK/Gang Beasts/Plugins/Assembly-CSharp-firstpass/UnityStandardAssets/Characters/FirstPerson.meta
 guid: 7579f716f6f52b24685a564ce5a33562
+========
+guid: c758f06d90f79e8418ee65029a17b241
+>>>>>>>> Stashed changes:Assets/GBMDK/Gang Beasts/Plugins/Assembly-CSharp-firstpass/UnityStandardAssets/Characters.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
