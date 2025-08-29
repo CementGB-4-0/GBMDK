@@ -175,8 +175,8 @@ namespace GB
 			}
 		}
 
-		[Header("Shared")]
 		[SerializeField]
+		[Header("Shared")]
 		public float EscalationTime;
 
 		[SerializeField]
@@ -197,9 +197,9 @@ namespace GB
 		[HideInInspector]
 		public float frameMalfunctionChance;
 
+		[SerializeField]
 		[Space]
 		[Header("Frame Malfunction")]
-		[SerializeField]
 		private List<Rigidbody> PotentialFrameBreaks;
 
 		[SerializeField]
@@ -223,9 +223,9 @@ namespace GB
 		[HideInInspector]
 		public float speedMalfunctionChance;
 
-		[SerializeField]
-		[Header("Speed Malfunction")]
 		[Space]
+		[Header("Speed Malfunction")]
+		[SerializeField]
 		private AudioClip speedEscalationStartClip;
 
 		[SerializeField]
@@ -240,9 +240,9 @@ namespace GB
 		[HideInInspector]
 		public float carriageMalfunctionChance;
 
+		[SerializeField]
 		[Header("Carriage Malfunction")]
 		[Space]
-		[SerializeField]
 		private List<Rigidbody> CarriageRefs;
 
 		[SerializeField]

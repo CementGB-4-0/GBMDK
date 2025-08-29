@@ -23,8 +23,8 @@ namespace GB.Achievements
 		[Tooltip("Unique game object to listen for collisions on. Ignored if trigger type does not require a unique object.")]
 		private GameObject TriggerListenObj;
 
-		[SerializeField]
 		[Tooltip("Particular beast body part to listen on. Ignored if the trigger type does not require a particular body part")]
+		[SerializeField]
 		private BodyEnum[] ActorListenPart;
 
 		[Tooltip("The period of time it takes this trigger to 'unset' itself. A value of -1 means the trigger will never unset.")]

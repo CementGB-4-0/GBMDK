@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using GB.Config;
 using GB.Core.Bootstrappers;
 using GB.Core.Loading;
 using GB.Data.Loading;
@@ -43,7 +44,7 @@ namespace GB.Setup
 		public delegate bool ScreenWaitingCheckDelegate();
 
 		[CompilerGenerated]
-		private sealed class _003CLoadGlobal_003Ed__43 : IEnumerator<object>, IEnumerator, IDisposable
+		private sealed class _003CLoadGlobal_003Ed__44 : IEnumerator<object>, IEnumerator, IDisposable
 		{
 			private int _003C_003E1__state;
 
@@ -76,7 +77,7 @@ namespace GB.Setup
 			}
 
 			[DebuggerHidden]
-			public _003CLoadGlobal_003Ed__43(int _003C_003E1__state)
+			public _003CLoadGlobal_003Ed__44(int _003C_003E1__state)
 			{
 			}
 
@@ -103,7 +104,7 @@ namespace GB.Setup
 		}
 
 		[CompilerGenerated]
-		private sealed class _003CLoadAsyncResources_003Ed__44 : IEnumerator<object>, IEnumerator, IDisposable
+		private sealed class _003CLoadAsyncResources_003Ed__45 : IEnumerator<object>, IEnumerator, IDisposable
 		{
 			private int _003C_003E1__state;
 
@@ -134,7 +135,7 @@ namespace GB.Setup
 			}
 
 			[DebuggerHidden]
-			public _003CLoadAsyncResources_003Ed__44(int _003C_003E1__state)
+			public _003CLoadAsyncResources_003Ed__45(int _003C_003E1__state)
 			{
 			}
 
@@ -161,7 +162,7 @@ namespace GB.Setup
 		}
 
 		[CompilerGenerated]
-		private sealed class _003CLoadMenu_003Ed__45 : IEnumerator<object>, IEnumerator, IDisposable
+		private sealed class _003CLoadMenu_003Ed__46 : IEnumerator<object>, IEnumerator, IDisposable
 		{
 			private int _003C_003E1__state;
 
@@ -188,7 +189,7 @@ namespace GB.Setup
 			}
 
 			[DebuggerHidden]
-			public _003CLoadMenu_003Ed__45(int _003C_003E1__state)
+			public _003CLoadMenu_003Ed__46(int _003C_003E1__state)
 			{
 			}
 
@@ -215,7 +216,7 @@ namespace GB.Setup
 		}
 
 		[CompilerGenerated]
-		private sealed class _003CFadeLoading_003Ed__46 : IEnumerator<object>, IEnumerator, IDisposable
+		private sealed class _003CFadeLoading_003Ed__47 : IEnumerator<object>, IEnumerator, IDisposable
 		{
 			private int _003C_003E1__state;
 
@@ -244,7 +245,7 @@ namespace GB.Setup
 			}
 
 			[DebuggerHidden]
-			public _003CFadeLoading_003Ed__46(int _003C_003E1__state)
+			public _003CFadeLoading_003Ed__47(int _003C_003E1__state)
 			{
 			}
 
@@ -271,7 +272,7 @@ namespace GB.Setup
 		}
 
 		[CompilerGenerated]
-		private sealed class _003CDisplaySplashScreen_003Ed__48 : IEnumerator<object>, IEnumerator, IDisposable
+		private sealed class _003CDisplaySplashScreen_003Ed__49 : IEnumerator<object>, IEnumerator, IDisposable
 		{
 			private int _003C_003E1__state;
 
@@ -306,7 +307,7 @@ namespace GB.Setup
 			}
 
 			[DebuggerHidden]
-			public _003CDisplaySplashScreen_003Ed__48(int _003C_003E1__state)
+			public _003CDisplaySplashScreen_003Ed__49(int _003C_003E1__state)
 			{
 			}
 
@@ -333,7 +334,7 @@ namespace GB.Setup
 		}
 
 		[CompilerGenerated]
-		private sealed class _003CStart_003Ed__51 : IEnumerator<object>, IEnumerator, IDisposable
+		private sealed class _003CStart_003Ed__52 : IEnumerator<object>, IEnumerator, IDisposable
 		{
 			private int _003C_003E1__state;
 
@@ -362,7 +363,7 @@ namespace GB.Setup
 			}
 
 			[DebuggerHidden]
-			public _003CStart_003Ed__51(int _003C_003E1__state)
+			public _003CStart_003Ed__52(int _003C_003E1__state)
 			{
 			}
 
@@ -396,6 +397,9 @@ namespace GB.Setup
 
 		[SerializeField]
 		private AssetReference _globalAssetRef;
+
+		[SerializeField]
+		private GBConfigData _config;
 
 		[SerializeField]
 		private List<ResourceCache> _resourceList;
@@ -507,31 +511,31 @@ namespace GB.Setup
 		{
 		}
 
-		[IteratorStateMachine(typeof(_003CLoadGlobal_003Ed__43))]
+		[IteratorStateMachine(typeof(_003CLoadGlobal_003Ed__44))]
 		private IEnumerator LoadGlobal()
 		{
 			return null;
 		}
 
-		[IteratorStateMachine(typeof(_003CLoadAsyncResources_003Ed__44))]
+		[IteratorStateMachine(typeof(_003CLoadAsyncResources_003Ed__45))]
 		private IEnumerator LoadAsyncResources()
 		{
 			return null;
 		}
 
-		[IteratorStateMachine(typeof(_003CLoadMenu_003Ed__45))]
+		[IteratorStateMachine(typeof(_003CLoadMenu_003Ed__46))]
 		private IEnumerator LoadMenu()
 		{
 			return null;
 		}
 
-		[IteratorStateMachine(typeof(_003CFadeLoading_003Ed__46))]
+		[IteratorStateMachine(typeof(_003CFadeLoading_003Ed__47))]
 		private IEnumerator FadeLoading()
 		{
 			return null;
 		}
 
-		[IteratorStateMachine(typeof(_003CDisplaySplashScreen_003Ed__48))]
+		[IteratorStateMachine(typeof(_003CDisplaySplashScreen_003Ed__49))]
 		private IEnumerator DisplaySplashScreen(int splash, ScreenWaitingCheckDelegate isWaitingCheck)
 		{
 			return null;
@@ -545,7 +549,7 @@ namespace GB.Setup
 		{
 		}
 
-		[IteratorStateMachine(typeof(_003CStart_003Ed__51))]
+		[IteratorStateMachine(typeof(_003CStart_003Ed__52))]
 		private IEnumerator Start()
 		{
 			return null;

@@ -10,7 +10,7 @@ namespace Coatsink.UnityServices.Matchmaking
 {
 	public class MultiplayServerQueryService : IDisposable
 	{
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CBeginServerQueryHandler_003Ed__4 : IAsyncStateMachine
 		{
@@ -44,7 +44,7 @@ namespace Coatsink.UnityServices.Matchmaking
 			}
 		}
 
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CServerQueryLoop_003Ed__15 : IAsyncStateMachine
 		{

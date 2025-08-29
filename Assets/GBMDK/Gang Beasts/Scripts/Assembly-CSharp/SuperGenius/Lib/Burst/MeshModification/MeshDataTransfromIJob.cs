@@ -11,6 +11,8 @@ namespace SuperGenius.Lib.Burst.MeshModification
 
 		public quaternion Rotation;
 
+		public float3 Scale;
+
 		public void Execute()
 		{
 		}

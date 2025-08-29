@@ -50,7 +50,7 @@ namespace GB.UI.Beasts
 			{
 				_playerAssigned = 0;
 				_pointIndex = 0;
-				m__onAssignedChanged = onAssignedChanged;
+                m__onAssignedChanged = onAssignedChanged;
 			}
 
 			public void RefreshPoint()

@@ -131,8 +131,8 @@ public class TentacleController : MonoBehaviour
 
 	public float releaseTargetChance;
 
-	[Header("Tranistion Chance Settings")]
 	[Header("Idle")]
+	[Header("Tranistion Chance Settings")]
 	public float IdleToFlail;
 
 	[Header("Attack Target")]

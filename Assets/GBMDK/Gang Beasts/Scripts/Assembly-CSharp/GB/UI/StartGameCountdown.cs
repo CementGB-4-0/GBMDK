@@ -19,7 +19,7 @@ namespace GB.UI
 		}
 
 		[CompilerGenerated]
-		private sealed class _003CCountdown_003Ed__24 : IEnumerator<object>, IEnumerator, IDisposable
+		private sealed class _003CCountdown_003Ed__26 : IEnumerator<object>, IEnumerator, IDisposable
 		{
 			private int _003C_003E1__state;
 
@@ -46,7 +46,7 @@ namespace GB.UI
 			}
 
 			[DebuggerHidden]
-			public _003CCountdown_003Ed__24(int _003C_003E1__state)
+			public _003CCountdown_003Ed__26(int _003C_003E1__state)
 			{
 			}
 
@@ -73,6 +73,10 @@ namespace GB.UI
 		}
 
 		public StringEvent Complete;
+
+		public StringEvent Start;
+
+		public StringEvent Terminated;
 
 		[SerializeField]
 		private UnityEvent OnTimerStart;
@@ -147,7 +151,7 @@ namespace GB.UI
 		{
 		}
 
-		[IteratorStateMachine(typeof(_003CCountdown_003Ed__24))]
+		[IteratorStateMachine(typeof(_003CCountdown_003Ed__26))]
 		private IEnumerator Countdown()
 		{
 			return null;

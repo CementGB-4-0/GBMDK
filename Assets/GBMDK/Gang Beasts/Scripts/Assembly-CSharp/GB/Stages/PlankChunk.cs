@@ -21,8 +21,8 @@ namespace GB.Stages
 		[SerializeField]
 		private float volume;
 
-		[SerializeField]
 		[Tooltip("Percentage chance to fall on trigger touch (0.0 -> 1.0)")]
+		[SerializeField]
 		private float breakChance;
 
 		[SerializeField]

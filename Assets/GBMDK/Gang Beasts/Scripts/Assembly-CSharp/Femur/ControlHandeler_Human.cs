@@ -34,7 +34,11 @@ namespace Femur
 
 		private Transform[] _cachedVoiceBoxHeadSubObjects;
 
+		private const float SIT_DELAY = 0.5f;
+
 		private float idleTimeMod;
+
+		private float sitDelay;
 
 		private float legActionDelay;
 

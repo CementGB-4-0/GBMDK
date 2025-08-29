@@ -6,8 +6,8 @@ namespace GB.Achievements
 {
 	public class AchievementTriggerDetector : AchievementManager
 	{
-		[SerializeField]
 		[Tooltip("The JSON-friendly name for this achievement")]
+		[SerializeField]
 		private string RelatedAchievementName;
 
 		[SerializeField]

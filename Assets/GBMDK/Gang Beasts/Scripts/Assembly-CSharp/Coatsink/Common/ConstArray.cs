@@ -8,8 +8,8 @@ namespace Coatsink.Common
 	{
 		public T[] _data;
 
-		[SerializeField]
 		[ReadOnly]
+		[SerializeField]
 		private uint _dataNum;
 
 		public T this[uint key]

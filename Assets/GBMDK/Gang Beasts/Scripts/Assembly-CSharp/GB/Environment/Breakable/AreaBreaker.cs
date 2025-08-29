@@ -14,8 +14,8 @@ namespace GB.Environment.Breakable
 		[SerializeField]
 		private List<MonoBehaviour> _onlySelected;
 
-		[SerializeField]
 		[HideInInspector]
+		[SerializeField]
 		private List<Collider> _onlyAccept;
 
 		private List<IBreakable> _onlyEffect;

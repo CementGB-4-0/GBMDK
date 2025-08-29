@@ -97,9 +97,22 @@ public class KawaseBlur : ScriptableRendererFeature
 
 	public KawaseBlurSettings settings;
 
+	public static Action<bool> OnBlurSet;
+
+	public static bool enableBlur;
+
 	private CustomRenderPass scriptablePass;
 
-	public static bool EnableBlur { get; set; }
+	public static bool EnableBlur
+	{
+		get
+		{
+			return false;
+		}
+		set
+		{
+		}
+	}
 
 	public static float BlurAmount { get; set; }
 

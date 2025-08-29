@@ -14,7 +14,11 @@ public class NameBarHandler : MonoBehaviour
 
 	private static readonly Vector3 BOTTOM_DUMMY_POS;
 
+	private static readonly float NAMEBAR_CRED_UPDATE_INTERVAL;
+
 	private BaseUserInfo _userInfo;
+
+	private float updateTimer;
 
 	[SerializeField]
 	private Canvas CanvasRef;

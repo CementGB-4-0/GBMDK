@@ -84,6 +84,8 @@ namespace Femur
 
 		public bool kickDuck;
 
+		public bool backFlip;
+
 		public float grabDelay;
 
 		public float reviveDelay;

@@ -4,8 +4,8 @@ namespace Coatsink.Common
 {
 	public class Serializer_Prefab : MonoBehaviour
 	{
-		[SerializeField]
 		[ReadOnly]
+		[SerializeField]
 		private string _resourcePath;
 
 		public string resourcePath => null;

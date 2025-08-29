@@ -9,8 +9,8 @@ namespace GB.Achievements
 		[SerializeField]
 		private string RelatedAchievementName;
 
-		[SerializeField]
 		[Tooltip("Break groups referenced by this achievement")]
+		[SerializeField]
 		private CompositeBreak[] ReferencedBreakDetectGroups;
 
 		[Tooltip("Number of referenced break groups that must be satisfied for the achievement to trigger")]

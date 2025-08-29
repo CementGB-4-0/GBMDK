@@ -5,7 +5,7 @@ namespace Coatsink.Common
 {
 	public static class Bitwise
 	{
-		[StructLayout(LayoutKind.Explicit)]
+		[StructLayout((LayoutKind)2)]
 		public struct TypeUnion
 		{
 			[FieldOffset(0)]

@@ -10,7 +10,7 @@ namespace Coatsink.UnityServices.Matchmaking
 {
 	public class MatchmakingManager
 	{
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CSendMatchRequest_003Ed__9 : IAsyncStateMachine
 		{

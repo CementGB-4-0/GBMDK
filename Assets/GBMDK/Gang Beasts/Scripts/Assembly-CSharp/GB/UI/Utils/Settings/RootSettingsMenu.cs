@@ -14,6 +14,8 @@ namespace GB.UI.Utils.Settings
 
 		private int _tempPing;
 
+		private bool _tempCrossPlay;
+
 		public override void ApplySettings()
 		{
 		}

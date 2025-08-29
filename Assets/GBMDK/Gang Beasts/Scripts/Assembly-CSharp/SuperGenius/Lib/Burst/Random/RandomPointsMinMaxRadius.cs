@@ -7,7 +7,7 @@ using Unity.Mathematics;
 
 namespace SuperGenius.Lib.Burst.Random
 {
-	[StructLayout(LayoutKind.Sequential, Size = 1)]
+	[StructLayout((LayoutKind)0, Size = 1)]
 	[BurstCompile]
 	public struct RandomPointsMinMaxRadius
 	{

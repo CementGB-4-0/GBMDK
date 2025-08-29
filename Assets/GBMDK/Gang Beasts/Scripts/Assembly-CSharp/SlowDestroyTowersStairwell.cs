@@ -144,8 +144,8 @@ public class SlowDestroyTowersStairwell : MonoBehaviour
 
 	public Joint[] otherJoints;
 
-	[HideInInspector]
 	[SerializeField]
+	[HideInInspector]
 	private Rigidbody[] otherJointsBody;
 
 	public float minBreakGap;

@@ -105,6 +105,8 @@ namespace GB.UI
 
 		private bool _showingOnline;
 
+		private bool AllowChange;
+
 		private GameModeEnum _currentGamemode;
 
 		private RotationConfig selectedConfig;
@@ -259,6 +261,14 @@ namespace GB.UI
 		}
 
 		private void PopulateVisibleButtons(bool matchmakingActive = false)
+		{
+		}
+
+		public void OnCountDownStart()
+		{
+		}
+
+		public void OnCountdownTerminated()
 		{
 		}
 

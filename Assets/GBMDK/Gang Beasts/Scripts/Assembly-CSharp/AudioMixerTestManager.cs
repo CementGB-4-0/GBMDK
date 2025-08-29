@@ -106,15 +106,15 @@ public class AudioMixerTestManager : MonoSingleton<AudioMixerTestManager>
 	[SerializeField]
 	private AudioMixer DJMixer;
 
-	[SerializeField]
 	[Space(10f)]
+	[SerializeField]
 	private float tempoLeft;
 
 	[SerializeField]
 	private float tempoRight;
 
-	[SerializeField]
 	[Space(10f)]
+	[SerializeField]
 	private float trackTransitionTimeInBars;
 
 	[SerializeField]

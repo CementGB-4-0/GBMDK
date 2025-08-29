@@ -6,6 +6,7 @@ namespace GB.UnityServices.Matchmaking
 		SteamOculus = 1,
 		Xbox = 2,
 		Playstation = 3,
-		Switch = 4
+		Switch = 4,
+		Crossplay = 5
 	}
 }

@@ -205,7 +205,7 @@ namespace Coatsink.Common
 
 		private struct DeconstructedMember
 		{
-			[StructLayout(LayoutKind.Explicit)]
+			[StructLayout((LayoutKind)2)]
 			public struct Value
 			{
 				[FieldOffset(0)]
@@ -253,11 +253,11 @@ namespace Coatsink.Common
 				return default(T);
 			}
 
-			string IMemberSink.this[string name]
-			{
-				set => throw new NotImplementedException();
-			}
-		}
+            string IMemberSink.this[string name]
+            {
+                set => throw new NotImplementedException();
+            }
+        }
 
 		private static int retentions;
 
@@ -524,14 +524,14 @@ namespace Coatsink.Common
 		{
 		}
 
-		[Conditional("ENABLE_PROFILER")]
 		[Conditional("CS_DEBUG")]
+		[Conditional("ENABLE_PROFILER")]
 		private static void PushProfile(string title)
 		{
 		}
 
-		[Conditional("ENABLE_PROFILER")]
 		[Conditional("CS_DEBUG")]
+		[Conditional("ENABLE_PROFILER")]
 		private static void PopProfile()
 		{
 		}

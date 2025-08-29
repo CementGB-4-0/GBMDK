@@ -12,7 +12,7 @@ namespace Coatsink.UnityServices.Matchmaking
 {
 	public class UnityMatchmakerWrapper : IDisposable
 	{
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CStartMatchmaking_003Ed__6 : IAsyncStateMachine
 		{
@@ -54,7 +54,7 @@ namespace Coatsink.UnityServices.Matchmaking
 			}
 		}
 
-		[StructLayout(3)]
+		[StructLayout((LayoutKind)3)]
 		[CompilerGenerated]
 		private struct _003CCancelMatchmaking_003Ed__7 : IAsyncStateMachine
 		{

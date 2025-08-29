@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 
 namespace Unity
 {
-	[StructLayout(3, CharSet = CharSet.Auto)]
+	[StructLayout((LayoutKind)3, CharSet = CharSet.Auto)]
 	public class GeneratedNetworkCode
 	{
 		public static void _WriteArrayUInt64_None(NetworkWriter writer, ulong[] value)

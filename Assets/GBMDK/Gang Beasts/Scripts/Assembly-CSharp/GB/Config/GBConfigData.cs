@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace GB.Config
 {
+	[CreateAssetMenu(fileName = "GangBeastsConfig", menuName = "Gang Beasts/Data/Generate Config File", order = 999)]
 	public class GBConfigData : ScriptableObject
 	{
 		public string RawGameVersion;
@@ -61,6 +62,11 @@ namespace GB.Config
 
 		public void SetMainDevBranch(string mainDev)
 		{
+		}
+
+		public string GetVersion()
+		{
+			return null;
 		}
 	}
 }

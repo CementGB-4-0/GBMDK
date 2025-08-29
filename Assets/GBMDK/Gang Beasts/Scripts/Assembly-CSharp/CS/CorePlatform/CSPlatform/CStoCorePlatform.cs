@@ -246,11 +246,6 @@ namespace CS.CorePlatform.CSPlatform
 			return false;
 		}
 
-		public override bool MessageConnectionReady(BaseUserInfo userInfo)
-		{
-			return false;
-		}
-
 		public override void CreateLobby(LOBBY_TYPE lobbyType, uint maxSlots)
 		{
 		}
@@ -260,6 +255,10 @@ namespace CS.CorePlatform.CSPlatform
 		}
 
 		public override void JoinLobby(ILobbyID id)
+		{
+		}
+
+		public void JoinLobbyViaCode(string joinCode)
 		{
 		}
 

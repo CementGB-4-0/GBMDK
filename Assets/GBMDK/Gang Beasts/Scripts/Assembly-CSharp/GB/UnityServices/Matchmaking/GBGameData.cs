@@ -22,5 +22,7 @@ namespace GB.UnityServices.Matchmaking
 		public uint TotalPlayerCountInclLocal;
 
 		public uint TotalPlayerCountExclLocal;
+
+		public string SessionPassword;
 	}
 }

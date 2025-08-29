@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TentacleSegmentManager : MonoBehaviour
 {
-	[StructLayout(3)]
+	[StructLayout((LayoutKind)3)]
 	[CompilerGenerated]
 	private struct _003CEnableSegmentManager_003Ed__10 : IAsyncStateMachine
 	{

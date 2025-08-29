@@ -13,8 +13,8 @@ public class NaughtyPlayersPunisher : MonoBehaviour
 
 	public float reductionAfterTriggering;
 
-	[Space]
 	[Header("Playable Areas")]
+	[Space]
 	public bool punishPlayersBelowPlayArea;
 
 	public float lowestPlayableHeight;
@@ -29,8 +29,8 @@ public class NaughtyPlayersPunisher : MonoBehaviour
 
 	public Transform[] naughtyZones;
 
-	[Space]
 	[Header("Punishments")]
+	[Space]
 	public bool disableGrip;
 
 	[Space]

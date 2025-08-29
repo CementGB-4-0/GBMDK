@@ -8,20 +8,20 @@ namespace GB.UI.Menu
 		[SerializeField]
 		private MenuController _menuController;
 
-		[Tooltip("Screen shown when entitlement fails")]
 		[SerializeField]
+		[Tooltip("Screen shown when entitlement fails")]
 		private BaseMenuScreen _failedEntitlement;
 
 		[SerializeField]
 		[Tooltip("Startup splash/ loading screen")]
 		private BaseMenuScreen _startupScreen;
 
-		[Tooltip("Screen with the main settings")]
 		[SerializeField]
+		[Tooltip("Screen with the main settings")]
 		private BaseMenuScreen _mainScreen;
 
-		[Tooltip("Screen with the online menu controller on")]
 		[SerializeField]
+		[Tooltip("Screen with the online menu controller on")]
 		private BaseMenuScreen _lobbyScreen;
 
 		[SerializeField]
@@ -44,16 +44,16 @@ namespace GB.UI.Menu
 		[Tooltip("Screen for creating an online lobby")]
 		private BaseMenuScreen _onlineCreate;
 
-		[Tooltip("Screen for joining an online lobby")]
 		[SerializeField]
+		[Tooltip("Screen for joining an online lobby")]
 		private BaseMenuScreen _onlineJoining;
 
-		[SerializeField]
 		[Tooltip("Screen for leaving an online lobby")]
+		[SerializeField]
 		private BaseMenuScreen _onlineLeaving;
 
-		[SerializeField]
 		[Tooltip("Screen for demo game")]
+		[SerializeField]
 		private BaseMenuScreen _demo;
 
 		[SerializeField]
