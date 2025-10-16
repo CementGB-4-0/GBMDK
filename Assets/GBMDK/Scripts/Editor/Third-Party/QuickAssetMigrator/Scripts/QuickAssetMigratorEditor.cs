@@ -1,72 +1,38 @@
-using SFB;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using SFB;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+using Object = UnityEngine.Object;
 
 namespace FizzSDK.QuickAssetMigrator
 {
     public class QuickAssetMigratorEditor : EditorWindow, IHasCustomMenu
     {
         private const string AssetMigratorRepository = "https://github.com/Fizzyhex/asset_migrator_extsdk";
-
+        private const string ConversionOutputFolderName = "ConversionOutput";
         private static bool _shouldMigrateScripts;
         private static bool _shouldMigrateShaders = true;
-        private string _migratorArguments;
-        private bool _isAssetMigratorPresent = true;
-        private bool _isFocused;
-        private bool _hasMigrated;
-        private bool _infoFoldoutVisible;
+        private static bool _shouldMigratePlugins;
         private static string _sourceFolder;
         private readonly List<string> _selectedAssets = new();
+        private bool _hasMigrated;
+        private bool _infoFoldoutVisible;
+        private bool _isAssetMigratorPresent = true;
+        private bool _isFocused;
+        private string _migratorArguments;
 
-        [MenuItem("Tools/GBMDK/Quick Asset Migrator")]
-        public static void ShowWindow()
-        {
-            GetWindow<QuickAssetMigratorEditor>("Quick Asset Migrator");
-        }
+        private static string ConversionOutputPath => Path.GetRelativePath(Path.Combine(Application.dataPath, ".."),
+            Path.Combine(Application.dataPath, ConversionOutputFolderName));
 
         private void OnEnable()
         {
-            _sourceFolder = File.Exists(Path.Combine($"{GetWorkingDirectory()}", "source_folder_saved.txt")) ? File.ReadAllText(Path.Combine(GetWorkingDirectory(), "source_folder_saved.txt")) : string.Empty;
-        }
-
-        void IHasCustomMenu.AddItemsToMenu(GenericMenu menu)
-        {
-            GUIContent content = new("Open Asset Migrator Repository");
-            menu.AddItem(content, false, () => Application.OpenURL(AssetMigratorRepository));
-        }
-
-        private static string GetWorkingDirectory()
-        {
-            return
-                Path.GetFullPath("Assets/GBMDK/Scripts/Editor/Third-Party/QuickAssetMigrator");
-        }
-
-        private static string[] GetExtensions()
-        {
-            var extensionOverrides = Path.Combine(GetWorkingDirectory(), "extensions.txt");
-
-            return System.IO.File.Exists(extensionOverrides)
-                ? System.IO.File.ReadAllLines(extensionOverrides)
-                : new[] { "prefab", "unity", "mat", "asset", "controller" };
-        }
-
-        private static bool CheckForAssetMigrator()
-        {
-            var assetMigratorPath = Path.Combine(GetWorkingDirectory(), "asset_migrator.exe");
-            return File.Exists(assetMigratorPath);
-        }
-
-        private static void MoveDirectoryDestructive(string source, string target)
-        {
-            if (Directory.Exists(target))
-                Directory.Delete(target, true);
-
-            Directory.Move(source, target);
+            _sourceFolder = File.Exists(Path.Combine($"{GetWorkingDirectory()}", "source_folder_saved.txt"))
+                ? File.ReadAllText(Path.Combine(GetWorkingDirectory(), "source_folder_saved.txt"))
+                : string.Empty;
         }
 
         private void OnGUI()
@@ -80,12 +46,11 @@ namespace FizzSDK.QuickAssetMigrator
             if (!_isAssetMigratorPresent)
             {
                 EditorGUILayout.BeginVertical(GUI.skin.box);
-                EditorGUILayout.HelpBox($"asset_migrator.exe is missing! Please drag it underneath {GetWorkingDirectory()} in your project.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    $"asset_migrator.exe is missing! Please drag it underneath {GetWorkingDirectory()} in your project.",
+                    MessageType.Error);
 
-                if (GUILayout.Button("Open Repository"))
-                {
-                    Application.OpenURL(AssetMigratorRepository);
-                }
+                if (GUILayout.Button("Open Repository")) Application.OpenURL(AssetMigratorRepository);
 
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.Space();
@@ -119,14 +84,16 @@ namespace FizzSDK.QuickAssetMigrator
                         new ExtensionFilter("Assets", GetExtensions())
                     };
 
-                    var paths = StandaloneFileBrowser.OpenFilePanel("Select Assets", _sourceFolder, targetExtensions, true);
+                    var paths = StandaloneFileBrowser.OpenFilePanel("Select Assets", _sourceFolder, targetExtensions,
+                        true);
 
                     foreach (var path in paths)
                     {
                         if (_selectedAssets.Contains(path)) continue;
                         if (!IsInDirectory(path, _sourceFolder))
                         {
-                            Debug.LogWarning($"Asset '{path}' was not added as it's not underneath source folder '{_sourceFolder}'!");
+                            Debug.LogWarning(
+                                $"Asset '{path}' was not added as it's not underneath source folder '{_sourceFolder}'!");
                             continue;
                         }
 
@@ -143,7 +110,8 @@ namespace FizzSDK.QuickAssetMigrator
                         if (_selectedAssets.Contains(path)) continue;
                         if (!IsInDirectory(path, _sourceFolder))
                         {
-                            Debug.LogWarning($"Folder '{path}' was not added as it's not underneath source folder '{_sourceFolder}'!");
+                            Debug.LogWarning(
+                                $"Folder '{path}' was not added as it's not underneath source folder '{_sourceFolder}'!");
                             continue;
                         }
 
@@ -153,12 +121,10 @@ namespace FizzSDK.QuickAssetMigrator
 
                 EditorGUI.BeginDisabledGroup(_selectedAssets.Count == 0);
                 if (GUILayout.Button("Clear Selection"))
-                {
-                    if (EditorUtility.DisplayDialog("Clear selected assets?", "Are you sure you want to clear the selected assets?", "Yes", "No"))
-                    {
+                    if (EditorUtility.DisplayDialog("Clear selected assets?",
+                            "Are you sure you want to clear the selected assets?", "Yes", "No"))
                         _selectedAssets.Clear();
-                    }
-                }
+
                 EditorGUI.EndDisabledGroup();
             }
 
@@ -181,6 +147,7 @@ namespace FizzSDK.QuickAssetMigrator
 
             _shouldMigrateScripts = EditorGUILayout.Toggle("Keep Scripts", _shouldMigrateScripts);
             _shouldMigrateShaders = EditorGUILayout.Toggle("Keep Shaders", _shouldMigrateShaders);
+            _shouldMigratePlugins = EditorGUILayout.Toggle("Keep Plugins", _shouldMigratePlugins);
 
             EditorGUILayout.EndVertical();
 
@@ -192,12 +159,10 @@ namespace FizzSDK.QuickAssetMigrator
 
             if (GUILayout.Button("Copy arguments to clipboard"))
             {
-                EditorGUIUtility.systemCopyBuffer = SplitMigratorArgs(MakeMigrationArgs(_sourceFolder, _selectedAssets));
+                EditorGUIUtility.systemCopyBuffer =
+                    SplitMigratorArgs(MakeMigrationArgs(_sourceFolder, _selectedAssets));
                 Debug.Log("Copied to clipboard!");
             }
-
-            const string conversionOutputFolderName = "ConversionOutput";
-            string conversionOutputPath = Path.GetRelativePath(Path.Combine(Application.dataPath, ".."), Path.Combine(Application.dataPath, conversionOutputFolderName));
 
             if (migrationPressed)
             {
@@ -217,27 +182,28 @@ namespace FizzSDK.QuickAssetMigrator
                 var process = Process.Start(startInfo);
                 process?.WaitForExit();
 
-                var conversionOutput = $"{conversionOutputPath}";
+                var conversionOutput = $"{ConversionOutputPath}";
 
                 if (!_shouldMigrateScripts)
                 {
                     var csFiles = Directory.GetFiles(conversionOutput, "*.cs", SearchOption.AllDirectories);
-                    foreach (var file in csFiles)
-                    {
-                        File.Delete(file);
-                    }
+                    foreach (var file in csFiles) File.Delete(file);
                 }
 
                 if (!_shouldMigrateShaders)
                 {
                     var shaderFiles = Directory.GetFiles(conversionOutput, "*.shader", SearchOption.AllDirectories);
-                    foreach (var file in shaderFiles)
-                    {
-                        File.Delete(file);
-                    }
+                    foreach (var file in shaderFiles) File.Delete(file);
                 }
 
-                var folderObject = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(conversionOutputFolderName);
+                if (!_shouldMigratePlugins)
+                {
+                    var dllFiles = Directory.GetFiles(conversionOutput, "*.dll", SearchOption.AllDirectories);
+                    foreach (var file in dllFiles) File.Delete(file);
+                }
+
+                AssetDatabase.ImportAsset(ConversionOutputPath, ImportAssetOptions.ImportRecursive);
+                var folderObject = AssetDatabase.LoadAssetAtPath<Object>(ConversionOutputFolderName);
                 EditorUtility.FocusProjectWindow();
                 AssetDatabase.OpenAsset(folderObject);
                 AssetDatabase.Refresh();
@@ -245,12 +211,50 @@ namespace FizzSDK.QuickAssetMigrator
                 _hasMigrated = true;
             }
 
-            if (_hasMigrated)
-            {
-                EditorGUILayout.LabelField($"Outputted to {conversionOutputPath}!");
-            }
+            if (_hasMigrated) EditorGUILayout.LabelField($"Outputted to {ConversionOutputPath}!");
 
             EditorGUILayout.EndVertical();
+        }
+
+        void IHasCustomMenu.AddItemsToMenu(GenericMenu menu)
+        {
+            GUIContent content = new("Open Asset Migrator Repository");
+            menu.AddItem(content, false, () => Application.OpenURL(AssetMigratorRepository));
+        }
+
+        [MenuItem("Tools/GBMDK/Quick Asset Migrator")]
+        public static void ShowWindow()
+        {
+            GetWindow<QuickAssetMigratorEditor>("Quick Asset Migrator");
+        }
+
+        private static string GetWorkingDirectory()
+        {
+            return
+                Path.GetFullPath("Assets/GBMDK/Scripts/Editor/Third-Party/QuickAssetMigrator");
+        }
+
+        private static string[] GetExtensions()
+        {
+            var extensionOverrides = Path.Combine(GetWorkingDirectory(), "extensions.txt");
+
+            return File.Exists(extensionOverrides)
+                ? File.ReadAllLines(extensionOverrides)
+                : new[] { "prefab", "unity", "mat", "asset", "controller" };
+        }
+
+        private static bool CheckForAssetMigrator()
+        {
+            var assetMigratorPath = Path.Combine(GetWorkingDirectory(), "asset_migrator.exe");
+            return File.Exists(assetMigratorPath);
+        }
+
+        private static void MoveDirectoryDestructive(string source, string target)
+        {
+            if (Directory.Exists(target))
+                Directory.Delete(target, true);
+
+            Directory.Move(source, target);
         }
 
         private static string SplitMigratorArgs(IReadOnlyList<string> args)

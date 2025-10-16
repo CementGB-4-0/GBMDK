@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
   m_DefaultGroup: 0bf95959d2a9f23469cb75aae9c50520
-  m_CachedHash:
+  m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: b506a0d72abfc3d6f497ca45ddbe073e
   m_OptimizeCatalogSize: 1
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -24,25 +24,29 @@ MonoBehaviour:
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 1
   m_NonRecursiveBuilding: 1
+  m_AllowNestedBundleFolders: 0
   m_CCDEnabled: 0
   m_maxConcurrentWebRequests: 500
   m_ContiguousBundles: 1
   m_StripUnityVersionFromBundleBuild: 0
   m_DisableVisibleSubAssetRepresentations: 0
-  m_ShaderBundleNaming: 1
-  m_ShaderBundleCustomNaming: '[]'
+  m_ShaderBundleNaming: 2
+  m_ShaderBundleCustomNaming: NewMod
   m_MonoScriptBundleNaming: 0
+  m_CheckForContentUpdateRestrictionsOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
     m_Id: 74a39b37858349046b69a288e568a9f5
   m_RemoteCatalogLoadPath:
     m_Id: 0f497b7329d329f48bee8ae2131cc1d4
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
+  m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
-  - {fileID: 11400000, guid: 6eb5575f744d46f46be6d46c1020f33f, type: 2}
   - {fileID: 11400000, guid: 00a8a7d8f865b9440aef16d1a686a633, type: 2}
+  - {fileID: 11400000, guid: 6eb5575f744d46f46be6d46c1020f33f, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -54,37 +58,34 @@ MonoBehaviour:
       m_Id: 282e8820cca4f5a49be204bd325c754d
       m_ProfileName: Default
       m_Values:
+      - m_Id: 0f497b7329d329f48bee8ae2131cc1d4
+        m_Value: '{MelonLoader.Utils.MelonEnvironment.ModsDirectory}/[ModName]/aa'
       - m_Id: 1170bf3f060c1f14b8f16886d7c1b5ea
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
-      - m_Id: 24d07322b16937846b7986957bad3a66
-        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 14091223abb118a4094f31cd2c320675
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
-      - m_Id: e8cac4742b17dcf4bbb6f9421c3755a4
-        m_Value: ServerData/[BuildTarget]
-      - m_Id: 9e7aa19d20193ba44a768dd3da6394ec
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+      - m_Id: 24d07322b16937846b7986957bad3a66
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 2fbabeacb3e2957448f9d1b72b19cf77
         m_Value: NewMod
       - m_Id: 74a39b37858349046b69a288e568a9f5
         m_Value: '[UnityEngine.Application.dataPath]/Exported/[ModName]/aa'
-      - m_Id: 0f497b7329d329f48bee8ae2131cc1d4
-        m_Value: '{MelonLoader.Utils.MelonEnvironment.ModsDirectory}/[ModName]/aa'
+      - m_Id: 9e7aa19d20193ba44a768dd3da6394ec
+        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+      - m_Id: e8cac4742b17dcf4bbb6f9421c3755a4
+        m_Value: ServerData/[BuildTarget]
     m_ProfileEntryNames:
+    - m_Id: 0f497b7329d329f48bee8ae2131cc1d4
+      m_Name: Gang Beasts.LoadPath
+      m_InlineUsage: 0
     - m_Id: 1170bf3f060c1f14b8f16886d7c1b5ea
       m_Name: BuildTarget
-      m_InlineUsage: 0
-    - m_Id: 24d07322b16937846b7986957bad3a66
-      m_Name: Local.BuildPath
       m_InlineUsage: 0
     - m_Id: 14091223abb118a4094f31cd2c320675
       m_Name: Local.LoadPath
       m_InlineUsage: 0
-    - m_Id: e8cac4742b17dcf4bbb6f9421c3755a4
-      m_Name: Remote.BuildPath
-      m_InlineUsage: 0
-    - m_Id: 9e7aa19d20193ba44a768dd3da6394ec
-      m_Name: Remote.LoadPath
+    - m_Id: 24d07322b16937846b7986957bad3a66
+      m_Name: Local.BuildPath
       m_InlineUsage: 0
     - m_Id: 2fbabeacb3e2957448f9d1b72b19cf77
       m_Name: ModName
@@ -92,8 +93,11 @@ MonoBehaviour:
     - m_Id: 74a39b37858349046b69a288e568a9f5
       m_Name: Gang Beasts.BuildPath
       m_InlineUsage: 0
-    - m_Id: 0f497b7329d329f48bee8ae2131cc1d4
-      m_Name: Gang Beasts.LoadPath
+    - m_Id: 9e7aa19d20193ba44a768dd3da6394ec
+      m_Name: Remote.LoadPath
+      m_InlineUsage: 0
+    - m_Id: e8cac4742b17dcf4bbb6f9421c3755a4
+      m_Name: Remote.BuildPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:
@@ -118,3 +122,4 @@ MonoBehaviour:
     m_Settings: {fileID: 11400000}
     m_NextInstanceId: 0
     m_RegisteredServiceTypeRefs: []
+    m_PingTimeoutInMilliseconds: 5000

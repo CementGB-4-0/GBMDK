@@ -23,30 +23,31 @@ namespace TreeView
     {
         private readonly List<IResourceLocation> assetKeys = new();
 
+        private readonly List<(IResourceLocation, Type, string)> localCache = new();
+
         private AssetTree assetTree;
         private AssetTreeIMGUI assetTreeGUI;
 
         private string catalogError = "None :)";
         private AsyncOperationHandle<IResourceLocator> catalogHandle;
-
-        private string defaultCatalogPath => Path.Combine(GBMDKConfigSettings.instance.gameSettings.gameFolderPath, "Gang Beasts_Data", "StreamingAssets", "aa", "catalog.json");
         private string catalogPath = "";
-        
+
         private bool isCatalogLoadSucessfull = true;
         private bool isLoadingCatalog;
         private Object loadedAsset;
-
-        private readonly List<(IResourceLocation, Type, string)> localCache = new();
         private Vector2 scrollPosition;
         private string searchString;
         private string tempCatalog = "";
-        
+
+        private string defaultCatalogPath => Path.Combine(GBMDKConfigSettings.instance.gameSettings.gameFolderPath,
+            "Gang Beasts_Data", "StreamingAssets", "aa", "catalog.json");
+
         protected void OnEnable()
         {
             // setup
             assetTree = new AssetTree();
             assetTreeGUI = new AssetTreeIMGUI(assetTree.Root);
-            
+
             catalogPath = defaultCatalogPath;
 
             // fill tree with example data
@@ -73,7 +74,7 @@ namespace TreeView
                 if (!string.IsNullOrWhiteSpace(newCatalogPath))
                     catalogPath = newCatalogPath;
             }
-            
+
             GUILayout.Label(catalogPath);
 
             GUILayout.EndHorizontal();
@@ -149,7 +150,7 @@ namespace TreeView
             assetTree.Clear();
 
             var smolQuery = query.ToLower();
-                
+
             foreach (var asset in localCache)
             {
                 if (!asset.Item3.ToLower().Contains(smolQuery) && !asset.Item2.ToString().ToLower().Contains(smolQuery))

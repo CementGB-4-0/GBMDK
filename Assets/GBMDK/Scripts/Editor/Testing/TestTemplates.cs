@@ -1,4 +1,3 @@
-using CoreNet.Messaging.Messages;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 
@@ -7,7 +6,7 @@ namespace GBMDK.Editor
     public static class TestTemplates
     {
         public const string TemplateModName = "GBMDKTemplatesMod";
-        
+
         [MenuItem("GBMDK/Testing/Test GBMDK Templates")]
         public static void Test()
         {
@@ -24,4 +23,3 @@ namespace GBMDK.Editor
         }
     }
 }
-

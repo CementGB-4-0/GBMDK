@@ -1,5 +1,4 @@
 using UnityEditor;
-using UnityEngine;
 
 namespace GBMDK.Editor.Components
 {
@@ -7,6 +6,9 @@ namespace GBMDK.Editor.Components
     public class PhysicsAudioEmitterEditor : UnityEditor.Editor
     {
         [MenuItem("Assets/Create/GBMDK/Physics Audio Data")]
-        private static void CreateData() => Common.CreateAndSaveScriptableObject<PhysicsAudioData>();
+        private static void CreateData()
+        {
+            Common.CreateAndSaveScriptableObject<PhysicsAudioData>();
+        }
     }
 }

@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.IO;
+﻿using System;
 using System.Diagnostics;
+using System.IO;
+using UnityEditor;
 using UnityEditor.AddressableAssets;
-using System;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace GBMDK.Editor
