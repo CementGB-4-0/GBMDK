@@ -23,6 +23,7 @@ namespace GBMDK.Editor
             AssetDatabase.CreateAsset(scriptableObject, GetCurrentSelectedAssetPath() + $"/New {typeof(T)}.asset");
             EditorUtility.SetDirty(scriptableObject);
             Undo.RecordObject(scriptableObject, "CreateAndSaveScriptableObject");
+            Selection.activeObject = scriptableObject;
 
             return scriptableObject;
         }
