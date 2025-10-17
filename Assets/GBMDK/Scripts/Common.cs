@@ -1,11 +1,18 @@
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace GBMDK.Editor
 {
     public static class Common
     {
+        public static bool IsHandleSuccess(AsyncOperationHandle handle)
+        {
+            return handle.IsValid() &&
+                   handle is { Status: AsyncOperationStatus.Succeeded, Result: not null };
+        }
+        
         public static string GetCurrentSelectedAssetPath()
         {
             var path = AssetDatabase.GetAssetPath(Selection.activeObject);
