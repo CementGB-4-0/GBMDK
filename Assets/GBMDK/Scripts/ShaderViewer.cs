@@ -17,9 +17,9 @@ namespace GBMDK
     public class ShaderViewer : MonoBehaviour
     {
         private static List<Shader> _cachedShaders = new();
-        private CancellationTokenSource cts = new();
 
         private readonly Dictionary<Material, string> dummyShaderNames = new();
+        private CancellationTokenSource cts = new();
 
         private static string CatalogPath => Path.Combine(GBMDKConfigSettings.instance.gameSettings.gameFolderPath,
             "Gang Beasts_Data", "StreamingAssets", "aa", "catalog.json");
@@ -29,6 +29,7 @@ namespace GBMDK
             cts?.Cancel();
             cts = new CancellationTokenSource();
             Selection.selectionChanged += Bind_OnSelectionChange;
+            EditorApplication.update += OnUpdate;
         }
 
         private void OnDisable()
@@ -39,6 +40,18 @@ namespace GBMDK
                 if (dm.Key == null) continue;
                 dm.Key.shader = Shader.Find(dm.Value);
             }
+
+            EditorApplication.update -= OnUpdate;
+        }
+
+        private void OnUpdate()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling ||
+                EditorApplication.isUpdating)
+                // Not in Edit mode, don't interfere
+                return;
+
+            EditorApplication.QueuePlayerLoopUpdate();
         }
 
         [Button]
@@ -129,8 +142,6 @@ namespace GBMDK
                     {
                         // ignored
                     }
-
-                    EditorApplication.QueuePlayerLoopUpdate();
                 }
             }
 
