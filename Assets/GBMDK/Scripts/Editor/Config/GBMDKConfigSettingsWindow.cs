@@ -21,6 +21,10 @@ namespace GBMDK.Editor
             var root = rootVisualElement;
             if (!GBMDKConfigSettings.instance) return;
 
+            var editorFoldout = new Foldout
+            {
+                text = "Inspector"
+            };
             var editor = new InspectorElement(GBMDKConfigSettings.instance);
 
             var activeModNameFld = new TextField("Active Mod Name")
@@ -83,7 +87,8 @@ namespace GBMDK.Editor
 
             root.Add(gameSettingsLbl);
             root.Add(modSettingsLbl);
-            root.Add(editor);
+            root.Add(editorFoldout);
+            editorFoldout.Add(editor);
         }
 
         [InitializeOnLoadMethod]

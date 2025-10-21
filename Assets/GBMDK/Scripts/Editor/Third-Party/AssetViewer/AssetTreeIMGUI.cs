@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
@@ -59,7 +60,7 @@ namespace TreeView
 
                     if (newObject is GameObject)
                     {
-                        var newGameObject = GameObject.Instantiate(newObject) as GameObject;
+                        var newGameObject = Object.Instantiate(newObject) as GameObject;
                         var worldPos = SceneView.lastActiveSceneView.camera.transform.position +
                                        SceneView.lastActiveSceneView.camera.transform.forward;
                         newGameObject.transform.position = worldPos;
@@ -67,6 +68,7 @@ namespace TreeView
                     }
 
                     Selection.objects = new[] { newObject };
+                    Addressables.Release(handle);
                 };
             }
         }
