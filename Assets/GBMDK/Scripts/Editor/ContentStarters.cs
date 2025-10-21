@@ -97,7 +97,6 @@ namespace GBMDK.Editor
                     "Assets/GBMDK/Scenes/MapTemplate_Template.scenetemplate");
             var scenePath = $"{path}/NewMap.unity";
             var newScene = SceneTemplateService.Instantiate(sceneTemplate, false, scenePath);
-            Lightmapping.Bake();
             EditorSceneManager.SaveScene(newScene.scene);
 
             MarkAddressable(scenePath, Path.GetFileNameWithoutExtension(scenePath));
