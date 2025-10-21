@@ -15,6 +15,9 @@ namespace GBMDK.Editor
 {
     public class ContentStarters
     {
+        public static string ActiveModPath =>
+            $"Assets/Mods/{AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName")}";
+
         private static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress)
         {
             var settings = AddressableAssetSettingsDefaultObject.Settings;
@@ -29,7 +32,7 @@ namespace GBMDK.Editor
         [MenuItem("Assets/GBMDK/Starters/Costume Starter", priority = 10000)]
         public static void CostumeStarter()
         {
-            CreateCostumeStuff();
+            CreateCostumeStuff($"{ActiveModPath}/Costumes/NewCostume");
         }
 
         public static void CreateCostumeStuff(string fallbackPath = null)
@@ -78,7 +81,7 @@ namespace GBMDK.Editor
         [MenuItem("Assets/GBMDK/Starters/Map Starter", priority = 10000)]
         public static void MapStarter()
         {
-            CreateMapStuff();
+            CreateMapStuff($"{ActiveModPath}/Maps/NewMap");
         }
 
         public static void CreateMapStuff(string fallbackPath = null)
@@ -97,7 +100,6 @@ namespace GBMDK.Editor
                     "Assets/GBMDK/Scenes/MapTemplate_Template.scenetemplate");
             var scenePath = $"{path}/NewMap.unity";
             var newScene = SceneTemplateService.Instantiate(sceneTemplate, false, scenePath);
-            Lightmapping.Bake();
             EditorSceneManager.SaveScene(newScene.scene);
 
             MarkAddressable(scenePath, Path.GetFileNameWithoutExtension(scenePath));
@@ -123,7 +125,7 @@ namespace GBMDK.Editor
 
             MarkAddressable(infoPath, Path.GetFileNameWithoutExtension(infoPath));
 
-            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
             Selection.activeObject = sceneData;
         }
     }
