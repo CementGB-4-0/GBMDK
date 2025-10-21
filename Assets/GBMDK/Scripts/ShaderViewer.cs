@@ -18,29 +18,33 @@ namespace GBMDK
     {
         private static List<Shader> _cachedShaders = new();
 
-        private readonly Dictionary<Material, string> dummyShaderNames = new();
-        private CancellationTokenSource cts = new();
+        private readonly Dictionary<Material, string> _dummyShaderNames = new();
+        private CancellationTokenSource _cts = new();
 
         private static string CatalogPath => Path.Combine(GBMDKConfigSettings.instance.gameSettings.gameFolderPath,
             "Gang Beasts_Data", "StreamingAssets", "aa", "catalog.json");
 
         private void OnEnable()
         {
-            cts?.Cancel();
-            cts = new CancellationTokenSource();
+            _cts?.Cancel();
+            _cts = new CancellationTokenSource();
             Selection.selectionChanged += Bind_OnSelectionChange;
             EditorApplication.update += OnUpdate;
+            Bind_OnSelectionChange();
         }
 
         private void OnDisable()
         {
-            Selection.selectionChanged -= Bind_OnSelectionChange;
-            foreach (var dm in dummyShaderNames)
+            _cts?.Cancel();
+            _cts = new CancellationTokenSource();
+
+            foreach (var dm in _dummyShaderNames)
             {
                 if (dm.Key == null) continue;
                 dm.Key.shader = Shader.Find(dm.Value);
             }
 
+            Selection.selectionChanged -= Bind_OnSelectionChange;
             EditorApplication.update -= OnUpdate;
         }
 
@@ -91,21 +95,21 @@ namespace GBMDK
                 }
             }
 
-            foreach (var dm in dummyShaderNames)
+            foreach (var dm in _dummyShaderNames)
             {
                 if (dm.Key == null) continue;
                 dm.Key.shader = Shader.Find(dm.Value);
             }
 
-            cts?.Cancel();
-            cts = new CancellationTokenSource();
+            _cts?.Cancel();
+            _cts = new CancellationTokenSource();
         }
 
         private async UniTask OnActivated(GameObject[] obj)
         {
             if (obj is not { Length: > 0 })
             {
-                cts?.Cancel();
+                _cts?.Cancel();
                 return;
             }
 
@@ -134,7 +138,7 @@ namespace GBMDK
                     {
                         if (obj.ResourceType != typeof(Shader)) continue;
                         var shaderAsset = await Addressables.LoadAssetAsync<Shader>(obj)
-                            .WithCancellation(cts.Token, false, true);
+                            .WithCancellation(_cts.Token, false, true);
                         ret.Add(shaderAsset);
                         Debug.Log($"Loaded shader of name \"{shaderAsset.name}\"");
                     }
@@ -151,15 +155,15 @@ namespace GBMDK
 
         private async UniTask DoApplyingAddressableShaders(GameObject[] targets)
         {
-            var catalogText = await File.ReadAllTextAsync(CatalogPath, cts.Token);
+            var catalogText = await File.ReadAllTextAsync(CatalogPath, _cts.Token);
             var catalogDirPath = Path.GetDirectoryName(CatalogPath)?.Replace(@"\", @"\\");
             catalogText = catalogText.Replace("{UnityEngine.AddressableAssets.Addressables.RuntimePath}",
                     catalogDirPath)
                 .Replace("{MelonLoader.Utils.MelonEnvironment.ModsDirectory}", catalogDirPath);
             var tempCatalog = Path.GetTempFileName();
-            await File.WriteAllTextAsync(tempCatalog, catalogText, cts.Token);
+            await File.WriteAllTextAsync(tempCatalog, catalogText, _cts.Token);
             var catalog = await Addressables.LoadContentCatalogAsync(tempCatalog, true)
-                .WithCancellation(cts.Token, false, true);
+                .WithCancellation(_cts.Token, false, true);
             Addressables.AddResourceLocator(catalog);
             var shaders = await RetrieveAddressableShaders(catalog);
 
@@ -170,7 +174,7 @@ namespace GBMDK
                 var dummyMaterials = RetrieveDummyMaterials(target.GetComponentsInChildren<MeshRenderer>());
                 foreach (var dm in dummyMaterials)
                 {
-                    dummyShaderNames[dm] = dm.shader.name;
+                    _dummyShaderNames[dm] = dm.shader.name;
                     Shader chosenShader = null;
                     foreach (var sh in shaders)
                         if (sh.name == dm.shader.name)
