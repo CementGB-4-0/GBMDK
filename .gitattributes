@@ -1,2 +1,21 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Unity YAML assets
+*.unity merge=unityyamlmerge text eol=lf
+*.prefab merge=unityyamlmerge text eol=lf
+*.asset merge=unityyamlmerge text eol=lf
+*.mat merge=unityyamlmerge text eol=lf
+*.controller merge=unityyamlmerge text eol=lf
+*.anim merge=unityyamlmerge text eol=lf
+*.meta merge=unityyamlmerge text eol=lf
+
+# C# scripts
+*.cs text eol=lf
+
+# Other text files
+*.shader text eol=lf
+*.cginc text eol=lf
+
+# Binary files (handled by Git LFS if configured)
+*.psd binary
+*.png binary
+*.jpg binary
+*.fbx binary
