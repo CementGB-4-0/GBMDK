@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1508254687089194440}
   - component: {fileID: 1508254687089194441}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: col
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 1508254687549954509}
   - component: {fileID: 1508254687549954512}
   - component: {fileID: 1508254687549954515}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 1508254688001222768}
   - component: {fileID: 1508254688001222769}
   - component: {fileID: 6602046814774320871}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: StaticPlane
   m_TagString: Cant Climb
   m_Icon: {fileID: 0}
@@ -227,3 +227,4 @@ MonoBehaviour:
     sharkActor: {fileID: 0}
     fishActor: {fileID: 0}
   childInteractableObjectData: []
+  connectedGrabEvents: []
