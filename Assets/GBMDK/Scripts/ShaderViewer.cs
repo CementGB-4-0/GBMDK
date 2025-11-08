@@ -1,130 +1,77 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using Cysharp.Threading.Tasks;
-using GBMDK.Editor;
-using NaughtyAttributes;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using Object = UnityEngine.Object;
 
-namespace GBMDK
+namespace GBMDK.Editor
 {
-    [ExecuteAlways]
-    public class ShaderViewer : MonoBehaviour
+    public class ShaderViewer : ScriptableSingleton<ShaderViewer>
     {
-        private static List<Shader> _cachedShaders = new();
-
-        private readonly Dictionary<Material, string> _dummyShaderNames = new();
-        private CancellationTokenSource _cts = new();
+        public static List<Shader> CachedShaders = new();
+        private static readonly List<Material> _cachedMaterials = new();
 
         private static string CatalogPath => Path.Combine(GBMDKConfigSettings.instance.gameSettings.gameFolderPath,
             "Gang Beasts_Data", "StreamingAssets", "aa", "catalog.json");
 
-        private void OnEnable()
+        private void Awake()
         {
-            _cts?.Cancel();
-            _cts = new CancellationTokenSource();
-            Selection.selectionChanged += Bind_OnSelectionChange;
+            CachedShaders.Clear();
+            _cachedMaterials.Clear();
+            EditorSceneManager.sceneSaved += _ => OnShaderChangedEvent();
+            MaterialEditorListener.ShaderChangedEvent += _ => OnShaderChangedEvent();
             EditorApplication.update += OnUpdate;
-            Bind_OnSelectionChange();
         }
 
-        private void OnDisable()
+        public void OnDisable()
         {
-            _cts?.Cancel();
-            _cts = new CancellationTokenSource();
+            CachedShaders.Clear();
 
-            foreach (var dm in _dummyShaderNames)
+            var materials = _cachedMaterials.ToArray();
+            foreach (var m in materials)
             {
-                if (dm.Key == null) continue;
-                dm.Key.shader = Shader.Find(dm.Value);
+                m.shader = Shader.Find(m.shader.name);
+                _cachedMaterials.Remove(m);
             }
+        }
 
-            Selection.selectionChanged -= Bind_OnSelectionChange;
-            EditorApplication.update -= OnUpdate;
+        [InitializeOnLoadMethod]
+        [MenuItem("GBMDK/Debug/Reset Shader Viewer")]
+        private static void Initialize()
+        {
+            instance.OnDisable();
+            instance.Awake();
+            OnShaderChangedEvent();
         }
 
         private void OnUpdate()
         {
-            if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling ||
-                EditorApplication.isUpdating)
-                // Not in Edit mode, don't interfere
-                return;
-
             EditorApplication.QueuePlayerLoopUpdate();
         }
 
-        [Button]
-        private void ClearShaderCache()
+        private static void OnShaderChangedEvent()
         {
-            _cachedShaders = new List<Shader>();
-            Bind_OnSelectionChange();
+            OnAsyncLoop().Forget();
         }
 
-        private void Bind_OnSelectionChange()
+        private static async UniTask OnAsyncLoop()
         {
-            OnSelectionChange().Forget();
+            await DoApplyingAddressableShaders();
         }
 
-        private async UniTaskVoid OnSelectionChange()
+        private static Material[] RetrieveMaterials()
         {
-            if (Selection.activeTransform != null)
-            {
-                if (Selection.activeTransform == transform || Selection.activeTransform.parent == transform)
-                {
-                    await OnActivated(Selection.gameObjects);
-                    return;
-                }
-
-                var doActivate = false;
-                var children = new List<GameObject>();
-                foreach (Transform child in Selection.activeTransform)
-                {
-                    children.Add(child.gameObject);
-                    if (child == transform) doActivate = true;
-                }
-
-                if (doActivate)
-                {
-                    await OnActivated(children.ToArray());
-                    return;
-                }
-            }
-
-            foreach (var dm in _dummyShaderNames)
-            {
-                if (dm.Key == null) continue;
-                dm.Key.shader = Shader.Find(dm.Value);
-            }
-
-            _cts?.Cancel();
-            _cts = new CancellationTokenSource();
+            var allMats = Resources.FindObjectsOfTypeAll<Material>();
+            return allMats;
         }
 
-        private async UniTask OnActivated(GameObject[] obj)
+        private static async UniTask<Shader[]> RetrieveAddressableShaders(IResourceLocator catalog)
         {
-            if (obj is not { Length: > 0 })
-            {
-                _cts?.Cancel();
-                return;
-            }
-
-            await DoApplyingAddressableShaders(obj);
-        }
-
-        private static Material[] RetrieveDummyMaterials(MeshRenderer[] targets)
-        {
-            var ret = targets.SelectMany(rend => rend.sharedMaterials).ToArray();
-            return ret;
-        }
-
-        private async UniTask<Shader[]> RetrieveAddressableShaders(IResourceLocator catalog)
-        {
-            if (_cachedShaders.Count > 0) return _cachedShaders.ToArray();
+            if (CachedShaders.Count > 0) return CachedShaders.ToArray();
 
             var ret = new List<Shader>();
             AssetBundle.UnloadAllAssetBundles(false);
@@ -137,8 +84,8 @@ namespace GBMDK
                     try
                     {
                         if (obj.ResourceType != typeof(Shader)) continue;
-                        var shaderAsset = await Addressables.LoadAssetAsync<Shader>(obj)
-                            .WithCancellation(_cts.Token, false, true);
+                        var shaderAsset = await Addressables.LoadAssetAsync<Shader>(obj);
+                        shaderAsset.hideFlags = HideFlags.HideAndDontSave;
                         ret.Add(shaderAsset);
                         Debug.Log($"Loaded shader of name \"{shaderAsset.name}\"");
                     }
@@ -149,46 +96,51 @@ namespace GBMDK
                 }
             }
 
-            _cachedShaders = new List<Shader>(ret.ToArray());
+            CachedShaders = new List<Shader>(ret.ToArray());
             return ret.ToArray();
         }
 
-        private async UniTask DoApplyingAddressableShaders(GameObject[] targets)
+        private static async UniTask DoApplyingAddressableShaders()
         {
-            var catalogText = await File.ReadAllTextAsync(CatalogPath, _cts.Token);
+            var catalog = await LoadTempCatalog();
+            var shaders = await RetrieveAddressableShaders(catalog);
+            var dummyMaterials = RetrieveMaterials();
+
+            foreach (var dm in dummyMaterials)
+            {
+                Shader chosenShader = null;
+                foreach (var sh in shaders)
+                    if (sh.name == dm.shader.name)
+                    {
+                        chosenShader = sh;
+                        break;
+                    }
+
+                if (chosenShader == null) continue;
+                dm.shader = chosenShader;
+                if (_cachedMaterials.Contains(dm)) continue;
+                _cachedMaterials.Add(dm);
+            }
+
+            DisposeTempCatalog(catalog);
+        }
+
+        private static async UniTask<IResourceLocator> LoadTempCatalog()
+        {
+            var catalogText = await File.ReadAllTextAsync(CatalogPath);
             var catalogDirPath = Path.GetDirectoryName(CatalogPath)?.Replace(@"\", @"\\");
             catalogText = catalogText.Replace("{UnityEngine.AddressableAssets.Addressables.RuntimePath}",
                     catalogDirPath)
                 .Replace("{MelonLoader.Utils.MelonEnvironment.ModsDirectory}", catalogDirPath);
             var tempCatalog = Path.GetTempFileName();
-            await File.WriteAllTextAsync(tempCatalog, catalogText, _cts.Token);
-            var catalog = await Addressables.LoadContentCatalogAsync(tempCatalog, true)
-                .WithCancellation(_cts.Token, false, true);
+            await File.WriteAllTextAsync(tempCatalog, catalogText);
+            var catalog = await Addressables.LoadContentCatalogAsync(tempCatalog, true);
             Addressables.AddResourceLocator(catalog);
-            var shaders = await RetrieveAddressableShaders(catalog);
+            return catalog;
+        }
 
-            foreach (var target in targets)
-            {
-                if (!target.TryGetComponent<MeshRenderer>(out _) &&
-                    target.GetComponentInChildren<MeshRenderer>() == null) return;
-                var dummyMaterials = RetrieveDummyMaterials(target.GetComponentsInChildren<MeshRenderer>());
-                foreach (var dm in dummyMaterials)
-                {
-                    _dummyShaderNames[dm] = dm.shader.name;
-                    Shader chosenShader = null;
-                    foreach (var sh in shaders)
-                        if (sh.name == dm.shader.name)
-                        {
-                            chosenShader = sh;
-                            break;
-                        }
-
-                    if (chosenShader == null) continue;
-                    dm.shader = chosenShader;
-                    EditorUtility.SetDirty(dm);
-                }
-            }
-
+        private static void DisposeTempCatalog(IResourceLocator catalog)
+        {
             Addressables.RemoveResourceLocator(catalog);
         }
     }
