@@ -8,14 +8,6 @@ namespace GBMDK.Editor
 {
     public class GBMDKConfigSettingsWindow : EditorWindow
     {
-        private void OnGUI()
-        {
-            if (AddressableAssetSettingsDefaultObject.SettingsExists)
-                AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming =
-                    AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
-                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName");
-        }
-
         private void CreateGUI()
         {
             var root = rootVisualElement;
@@ -42,6 +34,9 @@ namespace GBMDK.Editor
                 if (!AddressableAssetSettingsDefaultObject.SettingsExists) return;
                 AddressableAssetSettingsDefaultObject.Settings.profileSettings.SetValue(
                     AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName", evt.newValue);
+                AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming =
+                    AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
+                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName");
             });
 
             var gamePathBtn = new Button(() =>
@@ -89,6 +84,17 @@ namespace GBMDK.Editor
             root.Add(modSettingsLbl);
             root.Add(editorFoldout);
             editorFoldout.Add(editor);
+        }
+
+        private void OnValidate()
+        {
+            if (AddressableAssetSettingsDefaultObject.SettingsExists)
+            {
+                AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming =
+                    AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
+                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName");
+                EditorUtility.SetDirty(AddressableAssetSettingsDefaultObject.Settings);
+            }
         }
 
         [InitializeOnLoadMethod]
