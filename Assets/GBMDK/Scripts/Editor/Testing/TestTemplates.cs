@@ -16,9 +16,13 @@ namespace GBMDK.Editor
                 AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName");
             AddressableAssetSettingsDefaultObject.Settings.profileSettings.SetValue(
                 AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName", $"{TemplateModName}");
+            AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming =
+                $"{TemplateModName}";
             ModTester.TestMod();
             AddressableAssetSettingsDefaultObject.Settings.profileSettings.SetValue(
                 AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName", prevModName);
+            AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming =
+                $"{prevModName}";
             AssetDatabase.DeleteAsset($"Assets/Mods/{TemplateModName}");
         }
     }
