@@ -1,0 +1,368 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ShaderVariants
+  m_Shaders:
+  - first: {fileID: 69, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: DIRECTIONAL
+        passType: 0
+      - keywords: DIRECTIONAL LIGHTMAP_SHADOW_MIXING SHADOWS_SCREEN SHADOWS_SHADOWMASK UNITY_HDR_ON
+        passType: 0
+      - keywords: DIRECTIONAL SHADOWS_SCREEN
+        passType: 0
+      - keywords: DIRECTIONAL SHADOWS_SCREEN UNITY_HDR_ON
+        passType: 0
+      - keywords: DIRECTIONAL UNITY_HDR_ON
+        passType: 0
+      - keywords: POINT
+        passType: 0
+      - keywords: POINT SHADOWS_CUBE
+        passType: 0
+      - keywords: POINT SHADOWS_CUBE SHADOWS_SOFT
+        passType: 0
+      - keywords: POINT SHADOWS_CUBE UNITY_HDR_ON
+        passType: 0
+      - keywords: POINT UNITY_HDR_ON
+        passType: 0
+      - keywords: SHADOWS_DEPTH SHADOWS_SOFT SPOT
+        passType: 0
+      - keywords: SHADOWS_DEPTH SPOT
+        passType: 0
+      - keywords: SHADOWS_DEPTH SPOT UNITY_HDR_ON
+        passType: 0
+      - keywords: SPOT
+        passType: 0
+      - keywords: SPOT UNITY_HDR_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 264573636f4f1894fac3bb679aeb8d4d, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 4b9576ec20a92c149882e29dbe97b7e3, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL INSTANCING_ON LIGHTPROBE_SH
+        passType: 4
+      - keywords: DIRECTIONAL INSTANCING_ON LIGHTPROBE_SH SHADOWS_SCREEN
+        passType: 4
+      - keywords: DIRECTIONAL INSTANCING_ON LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON
+        passType: 4
+      - keywords: DIRECTIONAL INSTANCING_ON LIGHTPROBE_SH VERTEXLIGHT_ON
+        passType: 4
+      - keywords: DIRECTIONAL
+        passType: 5
+      - keywords: DIRECTIONAL SHADOWS_SCREEN
+        passType: 5
+      - keywords: POINT
+        passType: 5
+      - keywords: SHADOWS_DEPTH SPOT
+        passType: 5
+      - keywords: SPOT
+        passType: 5
+      - keywords: INSTANCING_ON LIGHTPROBE_SH
+        passType: 10
+      - keywords: INSTANCING_ON LIGHTPROBE_SH SHADOWS_SHADOWMASK UNITY_HDR_ON
+        passType: 10
+      - keywords: INSTANCING_ON LIGHTPROBE_SH UNITY_HDR_ON
+        passType: 10
+      - keywords: LIGHTPROBE_SH
+        passType: 10
+  - first: {fileID: 4800000, guid: 567bebe07f9b5f648aa89e765799ca82, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 1465b3ea8c854094e8fca06b3cbe9b45, type: 3}
+    second:
+      variants:
+      - keywords: WATER_REFRACTIVE
+        passType: 0
+  - first: {fileID: 4800000, guid: dbfe4f1a386d1254b9cfd9507fe7ddd6, type: 3}
+    second:
+      variants:
+      - keywords: DEPTHEDGE_OFF TRANSLUCENCY_OFF
+        passType: 4
+  - first: {fileID: 4800000, guid: 75f8cc4ef377162458a9f25f67d51a98, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 1e8cd0ec3b70a8a4caf37a9f5942a9fa, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL FOG_EXP2 LIGHTPROBE_SH
+        passType: 4
+      - keywords: DIRECTIONAL FOG_EXP2 LIGHTPROBE_SH VERTEXLIGHT_ON
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH VERTEXLIGHT_ON
+        passType: 4
+      - keywords: SHADOWS_DEPTH
+        passType: 8
+  - first: {fileID: 4800000, guid: 1bde543819890f14da1270199f3b5b48, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 11fff9bc60d98fd4da3bacaff7a837d9, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 350ac0db24afcf443b95d4cdd84f56ba, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: UNITY_UI_CLIP_RECT
+        passType: 0
+  - first: {fileID: 4800000, guid: 1e3e4accab6bb684ba3df544c39407f4, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: FOG_EXP2
+        passType: 0
+      - keywords: FOG_EXP2 WATER_EDGEBLEND_ON WATER_REFLECTIVE WATER_VERTEX_DISPLACEMENT_ON
+        passType: 0
+      - keywords: FOG_EXP2 WATER_EDGEBLEND_ON WATER_SIMPLE WATER_VERTEX_DISPLACEMENT_OFF
+        passType: 0
+      - keywords: WATER_EDGEBLEND_ON WATER_REFLECTIVE WATER_VERTEX_DISPLACEMENT_ON
+        passType: 0
+      - keywords: WATER_EDGEBLEND_ON WATER_SIMPLE WATER_VERTEX_DISPLACEMENT_OFF
+        passType: 0
+      - keywords: WATER_EDGEBLEND_ON WATER_SIMPLE WATER_VERTEX_DISPLACEMENT_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 492994f6bb27b584ea73f863892b4b94, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL FOG_EXP2 INSTANCING_ON LIGHTPROBE_SH
+        passType: 4
+      - keywords: DIRECTIONAL INSTANCING_ON LIGHTPROBE_SH
+        passType: 4
+      - keywords: DIRECTIONAL INSTANCING_ON LIGHTPROBE_SH VERTEXLIGHT_ON
+        passType: 4
+      - keywords: DIRECTIONAL
+        passType: 5
+  - first: {fileID: 4800000, guid: 8d0ec4b806557f648985043e365d6857, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL FOG_EXP2 LIGHTPROBE_SH
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _DETAIL
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _DETAIL _OCCLUSION
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _UVFREE_LOCAL
+        passType: 4
+      - keywords: DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON
+        passType: 10
+      - keywords: DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON LIGHTMAP_ON
+        passType: 10
+      - keywords: DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON UNITY_HDR_ON
+        passType: 10
+      - keywords: DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON UNITY_HDR_ON _DETAIL
+        passType: 10
+      - keywords: DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON _DETAIL
+        passType: 10
+      - keywords: LIGHTPROBE_SH
+        passType: 10
+      - keywords: LIGHTPROBE_SH SHADOWS_SHADOWMASK UNITY_HDR_ON
+        passType: 10
+      - keywords: LIGHTPROBE_SH SHADOWS_SHADOWMASK UNITY_HDR_ON _DETAIL
+        passType: 10
+      - keywords: LIGHTPROBE_SH SHADOWS_SHADOWMASK UNITY_HDR_ON _UVFREE_LOCAL
+        passType: 10
+      - keywords: LIGHTPROBE_SH UNITY_HDR_ON
+        passType: 10
+      - keywords: LIGHTPROBE_SH UNITY_HDR_ON _DETAIL
+        passType: 10
+      - keywords: LIGHTPROBE_SH UNITY_HDR_ON _UVFREE_LOCAL
+        passType: 10
+      - keywords: LIGHTPROBE_SH _DETAIL
+        passType: 10
+      - keywords: LIGHTPROBE_SH _UVFREE_LOCAL
+        passType: 10
+  - first: {fileID: 4800000, guid: 8d811ece27594fe4ab8e46d1e85bbe9a, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL LIGHTPROBE_SH
+        passType: 4
+  - first: {fileID: 4800000, guid: 6ce93f09f029a1842a25b6b48a743fa9, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: b29b3d4336f722e418bd23cb21b3fc6d, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL LIGHTPROBE_SH
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH VERTEXLIGHT_ON
+        passType: 4
+  - first: {fileID: 4800000, guid: cb77f307197f808479000bb2e873ac6d, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _UVFREE_LOCAL
+        passType: 4
+  - first: {fileID: 4800000, guid: 303ed80fea56771498da1288c6864c13, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 549bc9b8eba8b4f438d7b168d833d8f2, type: 3}
+    second:
+      variants:
+      - keywords: UNDERLAY_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 2860827658bcce24aaf5480c55ead77a, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: SHADOWS_DEPTH
+        passType: 8
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: FOG_LINEAR
+        passType: 0
+      - keywords: FOG_EXP
+        passType: 0
+      - keywords: FOG_EXP2
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: TONEMAPPING_FILMIC
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: COLOR_GRADING
+        passType: 0
+      - keywords: COLOR_GRADING DITHERING
+        passType: 0
+      - keywords: BLOOM CHROMATIC_ABERRATION COLOR_GRADING DEPTH_OF_FIELD DITHERING GRAIN VIGNETTE_CLASSIC
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: FOG_EXP2
+        passType: 0
+      - keywords: FOG_OFF
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: DITHERING
+        passType: 0
+      - keywords: DITHERING GRAIN
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: FOG_EXP
+        passType: 0
+      - keywords: FOG_EXP2
+        passType: 0
+      - keywords: WATER_EDGEBLEND_ON WATER_REFLECTIVE WATER_VERTEX_DISPLACEMENT_ON
+        passType: 0
+      - keywords: FOG_EXP WATER_EDGEBLEND_ON WATER_REFLECTIVE WATER_VERTEX_DISPLACEMENT_ON
+        passType: 0
+      - keywords: FOG_EXP2 WATER_EDGEBLEND_ON WATER_REFLECTIVE WATER_VERTEX_DISPLACEMENT_ON
+        passType: 0
+      - keywords: WATER_EDGEBLEND_ON WATER_SIMPLE WATER_VERTEX_DISPLACEMENT_ON
+        passType: 0
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON
+        passType: 4
+      - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF LIGHTPROBE_SH
+        passType: 4
+      - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF LIGHTPROBE_SH SHADOWS_SCREEN
+        passType: 4
+      - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF LIGHTPROBE_SH VERTEXLIGHT_ON
+        passType: 4
+      - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON
+        passType: 4
+      - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_DEPTH
+        passType: 8
+      - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_CUBE
+        passType: 8
+      - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF FOG_EXP2 LIGHTMAP_OFF SHADOWS_DEPTH
+        passType: 8
+      - keywords:
+        passType: 10
+      - keywords: DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON
+        passType: 10
+      - keywords: UNITY_HDR_ON
+        passType: 10
+      - keywords: LIGHTPROBE_SH UNITY_HDR_ON
+        passType: 10
+      - keywords: DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON LIGHTMAP_OFF SHADOWS_DEPTH
+        passType: 10
+      - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_DEPTH
+        passType: 10
+      - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF FOG_EXP2 LIGHTMAP_OFF SHADOWS_DEPTH
+        passType: 10
+      - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_DEPTH UNITY_HDR_ON
+        passType: 10
