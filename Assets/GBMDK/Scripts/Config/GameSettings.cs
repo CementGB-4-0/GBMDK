@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 
 namespace GBMDK.Editor
@@ -9,3 +10,5 @@ namespace GBMDK.Editor
         public string launchArgs;
     }
 }
+
+#endif

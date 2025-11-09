@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
-using GBMDK.Editor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+#if UNITY_EDITOR
+using GBMDK.Editor;
+#endif
 
 public class OpaqueSurfaceFogRendererFeature : ScriptableRendererFeature
 {
     [SerializeField] private OpaqueSurfaceFogSettings opaqueFogSettings;
-
-    [SerializeField] private Shader opaqueFogShader;
 
     private readonly int idFogColor = Shader.PropertyToID("_FogColor");
 
@@ -24,6 +24,8 @@ public class OpaqueSurfaceFogRendererFeature : ScriptableRendererFeature
     private readonly int idSkyFogElevation = Shader.PropertyToID("_SkyFogElevation");
 
     private readonly int idSkyFogMaxDepth = Shader.PropertyToID("_SkyFogMaxDepth");
+
+    private Shader opaqueFogShader;
 
     private OpaqueSurfaceFogRenderPass renderPass;
 
@@ -57,10 +59,12 @@ public class OpaqueSurfaceFogRendererFeature : ScriptableRendererFeature
 
     private async void InitializeRenderPassBlitMaterial()
     {
+#if UNITY_EDITOR
         opaqueFogShader =
             ShaderViewer.CachedShaders.FirstOrDefault(sh => sh.name == "Hidden/GangBeasts/OpaqueSurfaceFog") ??
             Shader.Find("Hidden/GangBeasts/OpaqueSurfaceFog");
         if (renderPass != null) renderPass.InitializeBlitMaterial(opaqueFogShader);
+#endif
     }
 
     private void UpdateGlobalShaderProperties()

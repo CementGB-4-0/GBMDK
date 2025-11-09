@@ -14,7 +14,9 @@ namespace GBMDK.Editor
             if (Directory.Exists(outputPath))
                 Directory.Delete(outputPath, true);
             Directory.CreateDirectory(outputPath);
+            ShaderViewer.instance.OnDisable();
             AssetDatabase.Refresh();
+            AssetDatabase.SaveAssets();
             AddressableAssetSettings.BuildPlayerContent();
         }
 

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: cf3871699b616fc419ccbbfd27f858df, type: 2}
-  m_LightingSettings: {fileID: 850595691, guid: 1a30139fc520f4b4989967d2ceaee07e, type: 2}
+  m_LightingSettings: {fileID: 850595691, guid: ce45bded72fe961468ea2e25eb3f49cb, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -177,6 +177,22 @@ PrefabInstance:
     - target: {fileID: 7310421795408151580, guid: 99f33c5fcdb8b3b49afbc5da718c4a11, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 185.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310421795408152643, guid: 99f33c5fcdb8b3b49afbc5da718c4a11, type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 2.75506e-40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310421795408152643, guid: 99f33c5fcdb8b3b49afbc5da718c4a11, type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 2.2e-44
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310421795408152643, guid: 99f33c5fcdb8b3b49afbc5da718c4a11, type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: -2.4405384e-30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310421795408152643, guid: 99f33c5fcdb8b3b49afbc5da718c4a11, type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 9.188e-41
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99f33c5fcdb8b3b49afbc5da718c4a11, type: 3}
@@ -2326,7 +2342,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1408231819}
+  - {fileID: 1508254687224037882}
   m_Father: {fileID: 80082643}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2610,11 +2626,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e416c7da4dd9c064ba217047ed7ea815, type: 3}
---- !u!4 &1408231819 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1508254688001222768, guid: e416c7da4dd9c064ba217047ed7ea815, type: 3}
-  m_PrefabInstance: {fileID: 1408231818}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1468759761
 GameObject:
   m_ObjectHideFlags: 0
@@ -3054,7 +3065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 471048cfa2a54f400711efc924adc4e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rendererFeature: {fileID: 11400000, guid: ca48c3ffbc00b8c4697ef2adce021722, type: 2}
+  rendererFeature: {fileID: 8508142893437347676, guid: 442881b91f6f1fe49b05577f94b41dd5, type: 2}
   settings:
     skyColor: {r: 0, g: 0.14479144, b: 0.695, a: 1}
     fogColor: {r: 3.4415908, g: 2.072162, b: 2.2343311, a: 1}
@@ -3349,3 +3360,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8574c63ac0503f191457614e02190b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1508254687224037882 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1508254688001222768, guid: e416c7da4dd9c064ba217047ed7ea815, type: 3}
+  m_PrefabInstance: {fileID: 1408231818}
+  m_PrefabAsset: {fileID: 0}

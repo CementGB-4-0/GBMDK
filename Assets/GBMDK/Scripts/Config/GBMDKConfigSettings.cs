@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEditor;
 
 namespace GBMDK.Editor
@@ -17,3 +19,5 @@ namespace GBMDK.Editor
         }
     }
 }
+
+#endif

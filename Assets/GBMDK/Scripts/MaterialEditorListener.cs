@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.IO;
 using UnityEditor;
@@ -14,7 +15,7 @@ namespace GBMDK.Editor
             var sceneName = string.Empty;
 
             foreach (var path in paths)
-                if (path.Contains(".unity"))
+                if (path.Contains(".unity") || path.Contains(".mat"))
                 {
                     scenePath = Path.GetDirectoryName(path);
                     sceneName = Path.GetFileNameWithoutExtension(path);
@@ -22,7 +23,7 @@ namespace GBMDK.Editor
 
             if (sceneName.Length == 0) return paths;
 
-            ShaderViewer.instance?.OnDisable();
+            ShaderViewer.instance.OnDisable();
 
             return paths;
         }
@@ -39,3 +40,4 @@ namespace GBMDK.Editor
         }
     }
 }
+#endif

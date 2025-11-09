@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
@@ -6,6 +8,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace GBMDK.Editor
@@ -22,26 +25,43 @@ namespace GBMDK.Editor
         {
             CachedShaders.Clear();
             _cachedMaterials.Clear();
-            EditorSceneManager.sceneSaved += _ => OnShaderChangedEvent();
-            MaterialEditorListener.ShaderChangedEvent += _ => OnShaderChangedEvent();
+            EditorSceneManager.sceneSaved += OnEditorSceneManagerOnsceneSaved;
+            MaterialEditorListener.ShaderChangedEvent += OnChangedEvent;
             EditorApplication.update += OnUpdate;
         }
 
         public void OnDisable()
         {
+            EditorSceneManager.sceneSaved -= OnEditorSceneManagerOnsceneSaved;
+            MaterialEditorListener.ShaderChangedEvent -= OnChangedEvent;
+            EditorApplication.update -= OnUpdate;
+            foreach (var cachedShader in CachedShaders.ToArray()) DestroyImmediate(cachedShader);
+
             CachedShaders.Clear();
 
             var materials = _cachedMaterials.ToArray();
             foreach (var m in materials)
             {
+                if (m == null || m.shader == null) continue;
+
                 m.shader = Shader.Find(m.shader.name);
                 _cachedMaterials.Remove(m);
             }
         }
 
+        private void OnEditorSceneManagerOnsceneSaved(Scene _)
+        {
+            OnShaderChangedEvent();
+        }
+
+        private void OnChangedEvent(Material _)
+        {
+            OnShaderChangedEvent();
+        }
+
         [InitializeOnLoadMethod]
         [MenuItem("GBMDK/Debug/Reset Shader Viewer")]
-        private static void Initialize()
+        public static void Initialize()
         {
             instance.OnDisable();
             instance.Awake();
@@ -71,7 +91,7 @@ namespace GBMDK.Editor
 
         private static async UniTask<Shader[]> RetrieveAddressableShaders(IResourceLocator catalog)
         {
-            if (CachedShaders.Count > 0) return CachedShaders.ToArray();
+            //if (CachedShaders.Count > 0) return CachedShaders.ToArray();
 
             var ret = new List<Shader>();
             AssetBundle.UnloadAllAssetBundles(false);
@@ -145,3 +165,5 @@ namespace GBMDK.Editor
         }
     }
 }
+
+#endif

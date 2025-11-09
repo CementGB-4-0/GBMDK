@@ -1,7 +1,8 @@
+#if UNITY_EDITOR
+
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace GBMDK.Editor
 {
@@ -30,3 +31,5 @@ namespace GBMDK.Editor
         }
     }
 }
+
+#endif

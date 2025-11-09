@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.UIElements;
@@ -115,3 +117,5 @@ namespace GBMDK.Editor
         }
     }
 }
+
+#endif
