@@ -6,24 +6,18 @@ using UnityEngine;
 
 namespace GBMDK.Editor
 {
-    public class MyAssetModificationProcessor : AssetModificationProcessor
+    public class MaterialSaveDetector : AssetModificationProcessor
     {
-        public static string[] OnWillSaveAssets(string[] paths)
+        private static string[] OnWillSaveAssets(string[] paths)
         {
-            // Get the name of the scene to save.
-            var scenePath = string.Empty;
-            var sceneName = string.Empty;
-
             foreach (var path in paths)
-                if (path.Contains(".unity") || path.Contains(".mat"))
+            {
+                if (Path.GetExtension(path) == ".mat")
                 {
-                    scenePath = Path.GetDirectoryName(path);
-                    sceneName = Path.GetFileNameWithoutExtension(path);
+                    var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+                    if (material != null) material.shader = Shader.Find(material.shader.name);
                 }
-
-            if (sceneName.Length == 0) return paths;
-
-            ShaderViewer.instance.OnDisable();
+            }
 
             return paths;
         }

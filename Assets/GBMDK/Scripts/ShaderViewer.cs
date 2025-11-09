@@ -17,24 +17,14 @@ namespace GBMDK.Editor
     {
         public static List<Shader> CachedShaders = new();
         private static readonly List<Material> _cachedMaterials = new();
+        private static UniTask? _curProcess;
 
         private static string CatalogPath => Path.Combine(GBMDKConfigSettings.instance.gameSettings.gameFolderPath,
             "Gang Beasts_Data", "StreamingAssets", "aa", "catalog.json");
 
-        private void Awake()
+        public static void OnDisable()
         {
-            CachedShaders.Clear();
-            _cachedMaterials.Clear();
-            EditorSceneManager.sceneSaved += OnEditorSceneManagerOnsceneSaved;
-            MaterialEditorListener.ShaderChangedEvent += OnChangedEvent;
-            EditorApplication.update += OnUpdate;
-        }
-
-        public void OnDisable()
-        {
-            EditorSceneManager.sceneSaved -= OnEditorSceneManagerOnsceneSaved;
-            MaterialEditorListener.ShaderChangedEvent -= OnChangedEvent;
-            EditorApplication.update -= OnUpdate;
+            /*
             foreach (var cachedShader in CachedShaders.ToArray())
             {
                 CachedShaders.Remove(cachedShader);
@@ -43,6 +33,8 @@ namespace GBMDK.Editor
 
             CachedShaders.Clear();
 
+            */
+
             var materials = _cachedMaterials.ToArray();
             foreach (var m in materials)
             {
@@ -50,36 +42,48 @@ namespace GBMDK.Editor
 
                 m.shader = Shader.Find(m.shader.name);
                 _cachedMaterials.Remove(m);
+                EditorUtility.SetDirty(m);
             }
+
+            AssetBundle.UnloadAllAssetBundles(true);
         }
 
-        private void OnEditorSceneManagerOnsceneSaved(Scene _)
+        private static void OnChangedEvent(Material _)
         {
-            OnShaderChangedEvent();
-        }
-
-        private void OnChangedEvent(Material _)
-        {
-            OnShaderChangedEvent();
+            Activate();
         }
 
         [InitializeOnLoadMethod]
-        [MenuItem("GBMDK/Debug/Reset Shader Viewer")]
         public static void Initialize()
         {
-            instance.OnDisable();
-            instance.Awake();
-            OnShaderChangedEvent();
+            EditorSceneManager.sceneSaving += EditorSceneManagerOnsceneSaving;
+            EditorSceneManager.sceneSaved += EditorSceneManagerOnsceneSaved;
+            EditorApplication.hierarchyChanged += Activate;
+            MaterialEditorListener.ShaderChangedEvent += OnChangedEvent;
+            EditorApplication.update += OnUpdate;
+            Selection.selectionChanged += Activate;
+            Activate();
         }
 
-        private void OnUpdate()
+        private static void EditorSceneManagerOnsceneSaved(Scene scene)
+        {
+            Activate();
+        }
+
+        private static void EditorSceneManagerOnsceneSaving(Scene scene, string path)
+        {
+            OnDisable();
+        }
+
+        private static void OnUpdate()
         {
             EditorApplication.QueuePlayerLoopUpdate();
         }
 
-        private static void OnShaderChangedEvent()
+        [MenuItem("GBMDK/Debug/Activate Shader Viewer")]
+        public static void Activate()
         {
-            OnAsyncLoop().Forget();
+            if (_curProcess is not { Status: UniTaskStatus.Pending }) _curProcess = OnAsyncLoop();
         }
 
         private static async UniTask OnAsyncLoop()
@@ -96,9 +100,7 @@ namespace GBMDK.Editor
         private static async UniTask<Shader[]> RetrieveAddressableShaders(IResourceLocator catalog)
         {
             //if (CachedShaders.Count > 0) return CachedShaders.ToArray();
-
             var ret = new List<Shader>();
-            AssetBundle.UnloadAllAssetBundles(false);
             foreach (var key in catalog.Keys)
             {
                 catalog.Locate(key, typeof(Object), out var list);
@@ -109,9 +111,9 @@ namespace GBMDK.Editor
                     {
                         if (obj.ResourceType != typeof(Shader)) continue;
                         var shaderAsset = await Addressables.LoadAssetAsync<Shader>(obj);
-                        shaderAsset.hideFlags = HideFlags.HideAndDontSave;
+                        shaderAsset.hideFlags = HideFlags.DontSave;
                         ret.Add(shaderAsset);
-                        Debug.Log($"Loaded shader of name \"{shaderAsset.name}\"");
+                        //Debug.Log($"Loaded shader of name \"{shaderAsset.name}\"");
                     }
                     catch
                     {
@@ -126,6 +128,8 @@ namespace GBMDK.Editor
 
         private static async UniTask DoApplyingAddressableShaders()
         {
+            AssetBundle.UnloadAllAssetBundles(false);
+
             var catalog = await LoadTempCatalog();
             var shaders = await RetrieveAddressableShaders(catalog);
             var dummyMaterials = RetrieveMaterials();
