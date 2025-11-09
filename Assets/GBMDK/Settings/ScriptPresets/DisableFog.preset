@@ -27,7 +27,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: rendererFeature
     value: 
-    objectReference: {fileID: 11400000, guid: ca48c3ffbc00b8c4697ef2adce021722, type: 2}
+    objectReference: {fileID: 8508142893437347676, guid: 442881b91f6f1fe49b05577f94b41dd5, type: 2}
   - target: {fileID: 0}
     propertyPath: settings.skyColor.r
     value: 0

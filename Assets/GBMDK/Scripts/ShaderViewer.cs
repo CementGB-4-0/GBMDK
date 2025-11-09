@@ -35,7 +35,11 @@ namespace GBMDK.Editor
             EditorSceneManager.sceneSaved -= OnEditorSceneManagerOnsceneSaved;
             MaterialEditorListener.ShaderChangedEvent -= OnChangedEvent;
             EditorApplication.update -= OnUpdate;
-            foreach (var cachedShader in CachedShaders.ToArray()) DestroyImmediate(cachedShader);
+            foreach (var cachedShader in CachedShaders.ToArray())
+            {
+                CachedShaders.Remove(cachedShader);
+                DestroyImmediate(cachedShader);
+            }
 
             CachedShaders.Clear();
 
