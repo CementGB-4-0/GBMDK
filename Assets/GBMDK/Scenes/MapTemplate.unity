@@ -3052,12 +3052,12 @@ MonoBehaviour:
   rendererFeature: {fileID: 8508142893437347676, guid: 442881b91f6f1fe49b05577f94b41dd5, type: 2}
   settings:
     skyColor: {r: 0, g: 0.14479144, b: 0.695, a: 1}
-    fogColor: {r: 3.4415908, g: 2.072162, b: 2.2343311, a: 1}
+    fogColor: {r: 0, g: 0, b: 0, a: 1}
     fogLightScatterIntensity: 0.1
-    skyFogMaxDepth: 1213.4
-    skyFogElevation: 168.5
-    groundFogMaxDepth: 323.4
-    groundFogElevation: -14.1
+    skyFogMaxDepth: 35565
+    skyFogElevation: 1000
+    groundFogMaxDepth: 35565
+    groundFogElevation: -1000
 --- !u!1 &1862736464
 GameObject:
   m_ObjectHideFlags: 0
