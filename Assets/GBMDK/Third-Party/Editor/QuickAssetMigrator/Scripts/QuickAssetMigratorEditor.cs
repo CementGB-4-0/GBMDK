@@ -231,7 +231,7 @@ namespace FizzSDK.QuickAssetMigrator
         private static string GetWorkingDirectory()
         {
             return
-                Path.GetFullPath("Assets/GBMDK/Scripts/Editor/Third-Party/QuickAssetMigrator");
+                Path.GetFullPath("Assets/GBMDK/Third-Party/Editor/QuickAssetMigrator");
         }
 
         private static string[] GetExtensions()
