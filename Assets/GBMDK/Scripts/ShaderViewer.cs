@@ -9,32 +9,23 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 namespace GBMDK.Editor
 {
     public class ShaderViewer : ScriptableSingleton<ShaderViewer>
     {
-        public static List<Shader> CachedShaders = new();
-        private static readonly List<Material> _cachedMaterials = new();
-        private static UniTask? _curProcess;
+        [FormerlySerializedAs("CachedShaders")]
+        public List<Shader> cachedShaders = new();
+
+        private readonly List<Material> _cachedMaterials = new();
 
         private static string CatalogPath => Path.Combine(GBMDKConfigSettings.instance.gameSettings.gameFolderPath,
             "Gang Beasts_Data", "StreamingAssets", "aa", "catalog.json");
 
-        public static void OnDisable()
+        public void OnDisable()
         {
-            /*
-            foreach (var cachedShader in CachedShaders.ToArray())
-            {
-                CachedShaders.Remove(cachedShader);
-                DestroyImmediate(cachedShader);
-            }
-
-            CachedShaders.Clear();
-
-            */
-
             var materials = _cachedMaterials.ToArray();
             foreach (var m in materials)
             {
@@ -72,7 +63,7 @@ namespace GBMDK.Editor
 
         private static void EditorSceneManagerOnsceneSaving(Scene scene, string path)
         {
-            OnDisable();
+            instance.OnDisable();
         }
 
         private static void OnUpdate()
@@ -81,14 +72,14 @@ namespace GBMDK.Editor
         }
 
         [MenuItem("GBMDK/Debug/Activate Shader Viewer")]
-        public static void Activate()
+        public static async void Activate()
         {
-            if (_curProcess is not { Status: UniTaskStatus.Pending }) _curProcess = OnAsyncLoop();
+            await OnAsyncLoop();
         }
 
         private static async UniTask OnAsyncLoop()
         {
-            await DoApplyingAddressableShaders();
+            await instance.DoApplyingAddressableShaders();
         }
 
         private static Material[] RetrieveMaterials()
@@ -97,7 +88,7 @@ namespace GBMDK.Editor
             return allMats;
         }
 
-        private static async UniTask<Shader[]> RetrieveAddressableShaders(IResourceLocator catalog)
+        private async UniTask<Shader[]> RetrieveAddressableShaders(IResourceLocator catalog)
         {
             //if (CachedShaders.Count > 0) return CachedShaders.ToArray();
             var ret = new List<Shader>();
@@ -122,11 +113,11 @@ namespace GBMDK.Editor
                 }
             }
 
-            CachedShaders = new List<Shader>(ret.ToArray());
+            cachedShaders = new List<Shader>(ret.ToArray());
             return ret.ToArray();
         }
 
-        private static async UniTask DoApplyingAddressableShaders()
+        private async UniTask DoApplyingAddressableShaders()
         {
             AssetBundle.UnloadAllAssetBundles(false);
 

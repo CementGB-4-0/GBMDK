@@ -61,9 +61,10 @@ public class OpaqueSurfaceFogRendererFeature : ScriptableRendererFeature
     {
 #if UNITY_EDITOR
         opaqueFogShader =
-            ShaderViewer.CachedShaders.FirstOrDefault(sh => sh.name == "Hidden/GangBeasts/OpaqueSurfaceFog") ??
+            ShaderViewer.instance.cachedShaders.FirstOrDefault(sh =>
+                sh != null && sh.name == "Hidden/GangBeasts/OpaqueSurfaceFog") ??
             Shader.Find("Hidden/GangBeasts/OpaqueSurfaceFog");
-        if (renderPass != null) renderPass.InitializeBlitMaterial(opaqueFogShader);
+        renderPass?.InitializeBlitMaterial(opaqueFogShader);
 #endif
     }
 
