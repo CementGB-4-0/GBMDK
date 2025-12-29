@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace GBMDK.Editor
                 EditorUtility.SetDirty(m);
             }
 
-            AssetBundle.UnloadAllAssetBundles(true);
+            AssetBundle.UnloadAllAssetBundles(false);
         }
 
         private static void OnChangedEvent(Material _)
@@ -49,11 +50,25 @@ namespace GBMDK.Editor
         {
             EditorSceneManager.sceneSaving += EditorSceneManagerOnsceneSaving;
             EditorSceneManager.sceneSaved += EditorSceneManagerOnsceneSaved;
+            EditorApplication.playModeStateChanged += EditorApplicationOnplayModeStateChanged;
             EditorApplication.hierarchyChanged += Activate;
             MaterialEditorListener.ShaderChangedEvent += OnChangedEvent;
             EditorApplication.update += OnUpdate;
             Selection.selectionChanged += Activate;
             Activate();
+        }
+
+        private static void EditorApplicationOnplayModeStateChanged(PlayModeStateChange obj)
+        {
+            switch (obj)
+            {
+                case PlayModeStateChange.EnteredPlayMode or PlayModeStateChange.EnteredEditMode:
+                    Activate();
+                    break;
+                case PlayModeStateChange.ExitingPlayMode or PlayModeStateChange.ExitingEditMode:
+                    instance.OnDisable();
+                    break;
+            }
         }
 
         private static void EditorSceneManagerOnsceneSaved(Scene scene)
@@ -74,10 +89,17 @@ namespace GBMDK.Editor
         [MenuItem("GBMDK/Debug/Activate Shader Viewer")]
         public static async void Activate()
         {
-            await OnAsyncLoop();
+            try
+            {
+                await instance.OnAsyncLoop();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
 
-        private static async UniTask OnAsyncLoop()
+        private async UniTask OnAsyncLoop()
         {
             await instance.DoApplyingAddressableShaders();
         }
@@ -144,7 +166,7 @@ namespace GBMDK.Editor
             DisposeTempCatalog(catalog);
         }
 
-        private static async UniTask<IResourceLocator> LoadTempCatalog()
+        private async UniTask<IResourceLocator> LoadTempCatalog()
         {
             var catalogText = await File.ReadAllTextAsync(CatalogPath);
             var catalogDirPath = Path.GetDirectoryName(CatalogPath)?.Replace(@"\", @"\\");
