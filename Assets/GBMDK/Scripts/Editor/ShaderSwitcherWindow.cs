@@ -47,7 +47,7 @@ namespace GBMDK.Editor
             if (_toReplace == null || _replaceWith == null) return;
 
             foreach (var renderer in FindObjectsOfType<MeshRenderer>())
-            foreach (var material in renderer.materials)
+            foreach (var material in renderer.sharedMaterials)
                 if (material.shader.name == _toReplace.name)
                     material.shader = _replaceWith;
         }
