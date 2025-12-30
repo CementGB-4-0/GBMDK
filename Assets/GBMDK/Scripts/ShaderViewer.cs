@@ -168,6 +168,7 @@ namespace GBMDK.Editor
 
         private async UniTask<IResourceLocator> LoadTempCatalog()
         {
+            if (!File.Exists(CatalogPath)) throw new FileNotFoundException(CatalogPath);
             var catalogText = await File.ReadAllTextAsync(CatalogPath);
             var catalogDirPath = Path.GetDirectoryName(CatalogPath)?.Replace(@"\", @"\\");
             catalogText = catalogText.Replace("{UnityEngine.AddressableAssets.Addressables.RuntimePath}",
