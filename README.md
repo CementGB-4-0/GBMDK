@@ -1,22 +1,24 @@
 # GBMDK
 
 Gang Beasts Mod Development Kit: A pre-configured Unity project that contains dummy scripts and resources for building assets for Gang Beasts mods. 
-**[Requires Cement 4.0](https://github.com/CementGB-4-0/CementSource/releases/latest) installed on your game for map and costume creation.**
 
 ## Disclaimer
 
-This project DOES NOT and SHOULD NOT contain vanilla Gang Beasts assets, such as audio, meshes, textures, etc. in their entirety.  
-Some ripped data values are used, such as serialized MonoBehaviour field presets.  
+This project DOES NOT and SHOULD NOT contain proprietary vanilla Gang Beasts assets, such as audio, meshes, textures,
+etc. in their entirety.  
+Some ripped data values are used, such as serialized MonoBehaviour field presets and ScriptableObjects.  
 All Gang Beasts code is stripped from the ripped scripts. These scripts must ONLY contain gizmos and other editor-specific helpers as working code.  
 
 ## Setup
 
 ### Prerequisites
 
+- [MelonLoader, installed on game](https://github.com/LavaGang/MelonLoader.Installer/releases/latest/download/MelonLoader.Installer.exe)
+- [CementGB, installed on game](https://thunderstore.io/c/gang-beasts/p/CementGB/CementGB/)
 - [Unity Hub](https://unity.com/download)
 - Unity v2021.3.33f1 (``unityhub://2021.3.33f1/ee5a2aa03ab2`` (open as link in browser))
 - [Git](https://git-scm.com/downloads)
-- [GitHub Desktop](https://desktop.github.com/download/) (optional, makes things easier)
+- [GitHub Desktop](https://desktop.github.com/download/) (or any other Git client) (optional, makes contributing easier)
 
 ### Steps
 
