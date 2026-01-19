@@ -84,6 +84,7 @@ README.md.meta
 /Assets/Exported/**/*
 /Assets/ConversionOutput/**/*
 /Assets/ConversionOutput.meta
+Exported/
 
 # User-specific migrator data
 /Assets/log.txt
