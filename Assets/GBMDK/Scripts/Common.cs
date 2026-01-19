@@ -2,6 +2,9 @@
 
 using System.IO;
 using UnityEditor;
+using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Settings;
+using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEngine;
 
 namespace GBMDK.Editor
@@ -28,6 +31,30 @@ namespace GBMDK.Editor
             Selection.activeObject = scriptableObject;
 
             return scriptableObject;
+        }
+
+        public static AddressableAssetGroup CreateOrFindAddressableAssetGroup(AddressableAssetSettings settings,
+            string groupName)
+        {
+            var group = settings.FindGroup(groupName);
+            if (group != null) return group;
+            group = settings.CreateGroup(groupName, true, false, true, null, typeof(ContentUpdateGroupSchema),
+                typeof(BundledAssetGroupSchema));
+            return group;
+        }
+
+        public static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress)
+        {
+            var settings = AddressableAssetSettingsDefaultObject.Settings;
+            var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath),
+                CreateOrFindAddressableAssetGroup(settings,
+                    AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
+                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName")));
+            entry.SetAddress(assetAddress);
+
+            EditorUtility.SetDirty(settings);
+            AssetDatabase.SaveAssets();
+            return entry;
         }
     }
 }

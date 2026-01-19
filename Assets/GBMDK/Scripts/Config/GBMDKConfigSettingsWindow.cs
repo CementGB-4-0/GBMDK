@@ -21,6 +21,7 @@ namespace GBMDK.Editor
             };
             var editor = new InspectorElement(GBMDKConfigSettings.instance);
 
+            /*
             var activeModNameFld = new TextField("Active Mod Name")
             {
                 value = AddressableAssetSettingsDefaultObject.SettingsExists
@@ -40,6 +41,7 @@ namespace GBMDK.Editor
                     AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
                         AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName");
             });
+            */
 
             var gamePathBtn = new Button(() =>
             {
@@ -80,7 +82,7 @@ namespace GBMDK.Editor
             gameSettingsLbl.Add(gamePathBtn);
             gameSettingsLbl.Add(launchArgsFld);
 
-            modSettingsLbl.Add(activeModNameFld);
+            //modSettingsLbl.Add(activeModNameFld);
 
             root.Add(gameSettingsLbl);
             root.Add(modSettingsLbl);
