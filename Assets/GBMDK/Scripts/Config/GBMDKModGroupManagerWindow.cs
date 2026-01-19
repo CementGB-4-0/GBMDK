@@ -105,9 +105,7 @@ namespace GBMDK.Editor
             {
                 var noneFoundLabel = new Label("No Mod Groups found!");
                 rootVisualElement.Add(noneFoundLabel);
-
-                if (GBMDKModGroupManager.instance.modGroups == null)
-                    return;
+                GBMDKModGroupManager.instance.modGroups ??= new List<GBMDKModGroup>();
             }
 
             foreach (var modGroup in GBMDKModGroupManager.instance.modGroups)
