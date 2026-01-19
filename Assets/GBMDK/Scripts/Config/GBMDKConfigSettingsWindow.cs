@@ -73,6 +73,10 @@ namespace GBMDK.Editor
             {
                 text = "Mod Settings"
             };
+            var openGroupManagerBtn = new Button(GBMDKModGroupManagerWindow.ShowWindow)
+            {
+                text = "Open Mod Groups Manager"
+            };
 
             var gameSettingsLbl = new Foldout
             {
@@ -83,6 +87,7 @@ namespace GBMDK.Editor
             gameSettingsLbl.Add(launchArgsFld);
 
             //modSettingsLbl.Add(activeModNameFld);
+            modSettingsLbl.Add(openGroupManagerBtn);
 
             root.Add(gameSettingsLbl);
             root.Add(modSettingsLbl);
