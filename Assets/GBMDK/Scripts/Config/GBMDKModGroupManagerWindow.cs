@@ -45,6 +45,8 @@ namespace GBMDK.Editor
                 else if (string.IsNullOrWhiteSpace(modGroup?.folderPath) || modGroup.assetGroup == null)
                     DeleteModGroup(modGroup);
             }
+
+            Save(false);
         }
 
         public GBMDKModGroup CreateAndRegisterModGroup(string groupName = null)
