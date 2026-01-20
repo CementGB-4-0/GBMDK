@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -106,8 +107,8 @@ namespace GBMDK.Editor
 
         private static Material[] RetrieveMaterials()
         {
-            var allMats = Resources.FindObjectsOfTypeAll<Material>();
-            return allMats;
+            var allMats = Resources.FindObjectsOfTypeAll<Material>().Where(m => AssetDatabase.GetAssetPath(m).StartsWith("Assets"));
+            return allMats.ToArray();
         }
 
         private async UniTask<Shader[]> RetrieveAddressableShaders(IResourceLocator catalog)
@@ -149,6 +150,9 @@ namespace GBMDK.Editor
 
             foreach (var dm in dummyMaterials)
             {
+                //var assetPath = AssetDatabase.GetAssetPath(dm);
+                //Debug.Log(assetPath);
+                
                 Shader chosenShader = null;
                 foreach (var sh in shaders)
                     if (sh.name == dm.shader.name)
