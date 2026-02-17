@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 0bf95959d2a9f23469cb75aae9c50520
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: 7b31f4487d51af13cc1c39edd0a0c2d6
   m_OptimizeCatalogSize: 1
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
   m_ContiguousBundles: 1
   m_StripUnityVersionFromBundleBuild: 0
   m_DisableVisibleSubAssetRepresentations: 0
-  m_ShaderBundleNaming: 2
+  m_ShaderBundleNaming: 1
   m_ShaderBundleCustomNaming: NewMod
   m_MonoScriptBundleNaming: 0
   m_CheckForContentUpdateRestrictionsOption: 0
