@@ -22,10 +22,11 @@ namespace GBMDK.Editor
             return path;
         }
 
-        public static T CreateAndSaveScriptableObject<T>() where T : ScriptableObject
+        public static T CreateAndSaveScriptableObject<T>(string name = "") where T : ScriptableObject
         {
+            if (string.IsNullOrWhiteSpace(name)) name = $"New {typeof(T).Name}.asset";
             var scriptableObject = ScriptableObject.CreateInstance<T>();
-            AssetDatabase.CreateAsset(scriptableObject, GetCurrentSelectedAssetPath() + $"/New {typeof(T)}.asset");
+            AssetDatabase.CreateAsset(scriptableObject, GetCurrentSelectedAssetPath() + "/" + name);
             EditorUtility.SetDirty(scriptableObject);
             Undo.RecordObject(scriptableObject, "CreateAndSaveScriptableObject");
             Selection.activeObject = scriptableObject;
@@ -34,22 +35,24 @@ namespace GBMDK.Editor
         }
 
         public static AddressableAssetGroup CreateOrFindAddressableAssetGroup(AddressableAssetSettings settings,
-            string groupName)
+            string groupName, bool setAsDefault=false)
         {
             var group = settings.FindGroup(groupName);
             if (group != null) return group;
-            group = settings.CreateGroup(groupName, true, false, true, null, typeof(ContentUpdateGroupSchema),
+            group = settings.CreateGroup(groupName, setAsDefault, false, true, null, typeof(ContentUpdateGroupSchema),
                 typeof(BundledAssetGroupSchema));
+            EditorUtility.SetDirty(group);
             return group;
         }
 
-        public static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress)
+        public static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress, string groupName = "")
         {
             var settings = AddressableAssetSettingsDefaultObject.Settings;
+            AssetDatabase.RenameAsset(assetPath, assetAddress);
             var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath),
-                CreateOrFindAddressableAssetGroup(settings,
+                CreateOrFindAddressableAssetGroup(settings, string.IsNullOrWhiteSpace(groupName) ?
                     AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
-                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName")));
+                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName") : groupName));
             entry.SetAddress(assetAddress);
 
             EditorUtility.SetDirty(settings);
