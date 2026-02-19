@@ -92,3 +92,5 @@ source_folder_saved.txt
 source_folder_saved.txt.meta
 
 ProjectSettings/Packages/
+
+*.exr
