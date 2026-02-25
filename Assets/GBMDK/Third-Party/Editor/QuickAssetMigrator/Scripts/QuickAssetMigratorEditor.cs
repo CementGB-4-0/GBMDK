@@ -2,9 +2,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using GBMDK.Editor;
 using SFB;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
@@ -25,11 +28,12 @@ namespace FizzSDK.QuickAssetMigrator
         private bool _isFocused;
         private string _migratorArguments;
 
-        private static string ConversionOutputPath => Path.GetRelativePath(Path.Combine(Application.dataPath, ".."),
-            Path.Combine(Application.dataPath, ConversionOutputFolderName));
-
+        private static string assetsFullPath;
+        private static string ConversionOutputPath => $"{ConversionOutputFolderName}";
+        
         private void OnEnable()
         {
+            assetsFullPath = Application.dataPath;
             _sourceFolder = File.Exists(Path.Combine($"{GetWorkingDirectory()}", "source_folder_saved.txt"))
                 ? File.ReadAllText(Path.Combine(GetWorkingDirectory(), "source_folder_saved.txt"))
                 : string.Empty;
@@ -61,7 +65,7 @@ namespace FizzSDK.QuickAssetMigrator
             {
                 var path = StandaloneFileBrowser.OpenFolderPanel("Select Folder", "", false);
 
-                if (!string.IsNullOrWhiteSpace(path[0]))
+                if (!string.IsNullOrWhiteSpace(path.FirstOrDefault()))
                 {
                     _sourceFolder = path[0];
                     File.WriteAllText(Path.Combine(GetWorkingDirectory(), "source_folder_saved.txt"), _sourceFolder);
@@ -166,54 +170,125 @@ namespace FizzSDK.QuickAssetMigrator
 
             if (migrationPressed)
             {
-                var workingDirectory = GetWorkingDirectory();
-                Debug.Log("CWD:" + workingDirectory);
-                _migratorArguments = SplitMigratorArgs(MakeMigrationArgs(_sourceFolder, _selectedAssets));
-                Debug.Log($"Running asset migrator with arguments: {_migratorArguments}");
-
-                var startInfo = new ProcessStartInfo
-                {
-                    FileName = Path.Combine(workingDirectory, "asset_migrator.exe"),
-                    Arguments = _migratorArguments,
-                    UseShellExecute = false,
-                    WorkingDirectory = Application.dataPath
-                };
-
-                var process = Process.Start(startInfo);
-                process?.WaitForExit();
-
-                var conversionOutput = $"{ConversionOutputPath}";
-
-                if (!_shouldMigrateScripts)
-                {
-                    var csFiles = Directory.GetFiles(conversionOutput, "*.cs", SearchOption.AllDirectories);
-                    foreach (var file in csFiles) File.Delete(file);
-                }
-
-                if (!_shouldMigrateShaders)
-                {
-                    var shaderFiles = Directory.GetFiles(conversionOutput, "*.shader", SearchOption.AllDirectories);
-                    foreach (var file in shaderFiles) File.Delete(file);
-                }
-
-                if (!_shouldMigratePlugins)
-                {
-                    var dllFiles = Directory.GetFiles(conversionOutput, "*.dll", SearchOption.AllDirectories);
-                    foreach (var file in dllFiles) File.Delete(file);
-                }
-
-                AssetDatabase.ImportAsset(ConversionOutputPath, ImportAssetOptions.ImportRecursive);
-                var folderObject = AssetDatabase.LoadAssetAtPath<Object>(ConversionOutputFolderName);
-                EditorUtility.FocusProjectWindow();
-                AssetDatabase.OpenAsset(folderObject);
-                AssetDatabase.Refresh();
-
-                _hasMigrated = true;
+                BeginMigrate().Forget();
             }
 
-            if (_hasMigrated) EditorGUILayout.LabelField($"Outputted to {ConversionOutputPath}!");
+            if (_hasMigrated) EditorGUILayout.LabelField($"Outputted to Assets/{ConversionOutputPath}!");
 
             EditorGUILayout.EndVertical();
+        }
+
+        private async UniTaskVoid BeginMigrate()
+        {
+            var workingDirectory = GetWorkingDirectory();
+            Debug.Log("Working directory:" + workingDirectory);
+            _migratorArguments = SplitMigratorArgs(MakeMigrationArgs(_sourceFolder, _selectedAssets));
+            
+            await StartExternalProcessing(workingDirectory);
+            // await UniTask.SwitchToMainThread(); // Hangs the editor indefinitely????
+            OnExternalProcessingComplete();
+        }
+
+        private async UniTask StartExternalProcessing(string workingDirectory)
+        {
+            Debug.Log($"Running external process with arguments: {_migratorArguments}");
+            
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = Path.Combine(workingDirectory, "asset_migrator.exe"),
+                Arguments = _migratorArguments,
+                UseShellExecute = false,
+                WorkingDirectory = assetsFullPath,
+                RedirectStandardOutput = true
+            };
+            var process = new Process();
+            process.StartInfo = startInfo;
+            process.EnableRaisingEvents = true;
+            var utcs = new UniTaskCompletionSource<int>();
+
+            process.Exited += (_, _) =>
+            {
+                utcs.TrySetResult(process.ExitCode);
+                process.Dispose();
+            };
+            process.Start();
+            await utcs.Task.AsUniTask();
+        }
+
+        private void OnExternalProcessingComplete()
+        {
+            Debug.Log("External process ran and I received exit event, removing redundancies and resolving new guids. . .");
+            var conversionOutput = assetsFullPath + "/" + ConversionOutputPath;
+            Directory.CreateDirectory(conversionOutput);
+            var conversionOutputFiles = Directory.GetFiles(conversionOutput, "*", SearchOption.AllDirectories);
+            Debug.Log($"Iterating file count: {conversionOutputFiles.Length.ToString()}");
+
+            foreach (var file in conversionOutputFiles)
+            {
+                var assetPath = Common.FullPathToUnityPath(assetsFullPath, file); // Uses FileUtil API, which errors due to it not being called on main thread
+                var oldGuid = AssetDatabase.AssetPathToGUID(assetPath);
+                var extension = Path.GetExtension(file);
+                var isScript = extension is ".cs" or ".asmdef";
+                var isShader = extension is ".shader" or ".shadergraph";
+                var isPlugin = extension == ".dll";
+                var shouldDelete = (isPlugin && !_shouldMigratePlugins) || (isScript && !_shouldMigrateScripts) || (isShader && !_shouldMigrateShaders);
+
+                if (shouldDelete) File.Delete(file);
+
+                var guidWritten = ResolveNewGuidReference(GetMetaReferences(oldGuid), oldGuid, Path.GetFileName(file), extension);
+                Debug.Assert(guidWritten);
+            }
+
+            var folderObject = AssetDatabase.LoadAssetAtPath<Object>(ConversionOutputFolderName);
+            EditorUtility.FocusProjectWindow();
+            AssetDatabase.OpenAsset(folderObject);
+            AssetDatabase.Refresh();
+
+            _hasMigrated = true;
+            Debug.Log("Done!");
+        }
+
+        string[] GetMetaReferences(string guid)
+        {
+            return Directory.GetFiles(Path.GetDirectoryName(assetsFullPath)!, "*.*", SearchOption.AllDirectories)
+                .Where(metaFile =>
+                {
+                    try
+                    {
+                        return File.ReadAllText(metaFile).Contains(guid);
+                    }
+                    catch (IOException e)
+                    {
+                        Debug.LogError(e);
+                        return false;
+                    }
+                }).ToArray();
+        }
+        
+        bool ResolveNewGuidReference(string[] referencingAssetPaths, string oldGuid, string oldName, string extension)
+        {
+            foreach (var potentialNewFile in Directory.EnumerateFiles(Path.GetDirectoryName(assetsFullPath)!, "*" + extension,
+                         SearchOption.AllDirectories))
+            {
+                Debug.Log($"old guid: {oldGuid}");
+                var assetPath = Common.FullPathToUnityPath(assetsFullPath, potentialNewFile);
+                var newGuid = AssetDatabase.AssetPathToGUID(assetPath);
+                Debug.Log($"new guid: {newGuid}");
+                if (string.IsNullOrWhiteSpace(newGuid) || Path.GetFileName(potentialNewFile) != oldName || oldGuid == newGuid)
+                {
+                    continue;
+                }
+                Debug.Log($"new: {potentialNewFile} | guid: {newGuid}");
+                foreach (var path in referencingAssetPaths)
+                {
+                    var metaFileContents = File.ReadAllText(path).Replace(oldGuid, newGuid);
+                    File.WriteAllText(path, metaFileContents);
+                }
+                
+                return true;
+            }
+
+            return false;
         }
 
         void IHasCustomMenu.AddItemsToMenu(GenericMenu menu)
@@ -267,7 +342,7 @@ namespace FizzSDK.QuickAssetMigrator
             // note: asset migrator requires double quotes instead of single quotes, otherwise it'll panic and
             // say the paths are invalid!
 
-            var unityAssetsFolder = Application.dataPath;
+            var unityAssetsFolder = assetsFullPath;
             var escapedPaths = paths.Select(path => $"\"{path}\"");
 
             string[] arguments = { $"\"{sourceFolder}\"", $"\"{unityAssetsFolder}\"" };

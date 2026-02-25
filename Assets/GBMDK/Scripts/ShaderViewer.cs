@@ -123,7 +123,7 @@ namespace GBMDK.Editor
                     try
                     {
                         if (obj.ResourceType != typeof(Shader)) continue;
-                        var shaderAsset = await Addressables.LoadAssetAsync<Shader>(obj);
+                        var shaderAsset = await Addressables.LoadAssetAsync<Shader>(obj).ToUniTask();
                         shaderAsset.hideFlags = HideFlags.DontSave;
                         ret.Add(shaderAsset);
                         //Debug.Log($"Loaded shader of name \"{shaderAsset.name}\"");
@@ -169,14 +169,14 @@ namespace GBMDK.Editor
         private async UniTask<IResourceLocator> LoadTempCatalog()
         {
             if (!File.Exists(CatalogPath)) throw new FileNotFoundException(CatalogPath);
-            var catalogText = await File.ReadAllTextAsync(CatalogPath);
+            var catalogText = await File.ReadAllTextAsync(CatalogPath).AsUniTask();
             var catalogDirPath = Path.GetDirectoryName(CatalogPath)?.Replace(@"\", @"\\");
             catalogText = catalogText.Replace("{UnityEngine.AddressableAssets.Addressables.RuntimePath}",
                     catalogDirPath)
                 .Replace("{MelonLoader.Utils.MelonEnvironment.ModsDirectory}", catalogDirPath);
             var tempCatalog = Path.GetTempFileName();
-            await File.WriteAllTextAsync(tempCatalog, catalogText);
-            var catalog = await Addressables.LoadContentCatalogAsync(tempCatalog, true);
+            await File.WriteAllTextAsync(tempCatalog, catalogText).AsUniTask();
+            var catalog = await Addressables.LoadContentCatalogAsync(tempCatalog, true).ToUniTask();
             Addressables.AddResourceLocator(catalog);
             return catalog;
         }
