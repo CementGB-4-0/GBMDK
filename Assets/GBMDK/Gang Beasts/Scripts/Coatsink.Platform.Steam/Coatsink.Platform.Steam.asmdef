@@ -1,0 +1,9 @@
+{
+  "name": "Coatsink.Platform.Steam",
+  "references": [
+    "Coatsink.Platform",
+    "GangBeastsUnityLobby.Platform",
+    "com.rlabrecque.steamworks.net"
+  ],
+  "allowUnsafeCode": true
+}

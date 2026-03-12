@@ -8,5 +8,5 @@ public class URPConstants
 
     public static readonly RenderPassEvent renderPassEventSSR;
 
-    public static readonly RenderPassEvent renderPassEventOpaqueFog = (RenderPassEvent)442;
+    public static readonly RenderPassEvent renderPassEventOpaqueFog;
 }

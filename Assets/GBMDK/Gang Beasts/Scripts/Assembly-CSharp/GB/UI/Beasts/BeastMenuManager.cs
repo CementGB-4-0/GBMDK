@@ -10,257 +10,210 @@ using UnityEngine;
 
 namespace GB.UI.Beasts
 {
-	public class BeastMenuManager : MonoBehaviour
-	{
-		private struct PointInformation
-		{
-			private int _playerAssigned;
+    public class BeastMenuManager : MonoBehaviour
+    {
+        [SerializeField] private BeastMenuSpawner _beastSpawnPoints;
 
-			private int _pointIndex;
+        [SerializeField] private SpawnOrder[] _spawnOrder;
 
-			[CompilerGenerated]
-			private Action<int, int> m__onAssignedChanged;
+        private PointInformation[] _pointInfo;
 
-			public int PlayerAssigned
-			{
-				get
-				{
-					return 0;
-				}
-				set
-				{
-				}
-			}
+        private List<Actor> actorsToPin;
 
-			public int PointIndex => 0;
+        private List<int> lobbyBeastsInTeams;
 
-			private event Action<int, int> _onAssignedChanged
-			{
-				[CompilerGenerated]
-				add
-				{
-				}
-				[CompilerGenerated]
-				remove
-				{
-				}
-			}
+        private Coroutine pinRoutine;
 
-			public PointInformation(int pointIndex, Action<int, int> onAssignedChanged)
-			{
-				_playerAssigned = 0;
-				_pointIndex = 0;
-                m__onAssignedChanged = onAssignedChanged;
-			}
+        private void Awake()
+        {
+        }
 
-			public void RefreshPoint()
-			{
-			}
-		}
+        private void Start()
+        {
+        }
 
-		[Serializable]
-		private struct SpawnOrder
-		{
-			public int[] Order;
+        private void OnDestroy()
+        {
+        }
 
-			public SpawnOrder(int[] _order)
-			{
-				Order = null;
-			}
-		}
+        public event Action OnPositionClear
+        {
+            [CompilerGenerated] add { }
+            [CompilerGenerated] remove { }
+        }
 
-		[CompilerGenerated]
-		private sealed class _003CPinBeastsRoutine_003Ed__37 : IEnumerator<object>, IEnumerator, IDisposable
-		{
-			private int _003C_003E1__state;
+        public event Action<int, int> OnPositionPlayerChanged
+        {
+            [CompilerGenerated] add { }
+            [CompilerGenerated] remove { }
+        }
 
-			private object _003C_003E2__current;
+        public event Action<int, int> OnPositionSet
+        {
+            [CompilerGenerated] add { }
+            [CompilerGenerated] remove { }
+        }
 
-			public BeastMenuManager _003C_003E4__this;
+        public event Action<int, int> OnPositionCleared
+        {
+            [CompilerGenerated] add { }
+            [CompilerGenerated] remove { }
+        }
 
-			object IEnumerator<object>.Current
-			{
-				[DebuggerHidden]
-				get
-				{
-					return null;
-				}
-			}
+        private void LobbyPlayerManager_OnPlayerLeft(BaseUserInfo obj)
+        {
+        }
 
-			object IEnumerator.Current
-			{
-				[DebuggerHidden]
-				get
-				{
-					return null;
-				}
-			}
+        private bool Setup()
+        {
+            return false;
+        }
 
-			[DebuggerHidden]
-			public _003CPinBeastsRoutine_003Ed__37(int _003C_003E1__state)
-			{
-			}
+        public int GetLobbyBeastTeamCount()
+        {
+            return 0;
+        }
 
-			[DebuggerHidden]
-			void IDisposable.Dispose()
-			{
-			}
+        private void BeastTeamChange(LocalPlayerInfomationCache player, int oldTeam)
+        {
+        }
 
-			private bool MoveNext()
-			{
-				return false;
-			}
+        private void OnlineBeastTeamChange(OnlinePlayerInfomationCache player, int oldTeam)
+        {
+        }
 
-			bool IEnumerator.MoveNext()
-			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
-				return this.MoveNext();
-			}
+        public void DespawnBeast(int playerID)
+        {
+        }
 
-			[DebuggerHidden]
-			void IEnumerator.Reset()
-			{
-			}
-		}
+        public void SpawnBeast(int playerID, int teamIndex)
+        {
+        }
 
-		[SerializeField]
-		private BeastMenuSpawner _beastSpawnPoints;
+        public int GetSpawn(int playerID, int teamIndex)
+        {
+            return 0;
+        }
 
-		private List<int> lobbyBeastsInTeams;
+        public void ResetPositions()
+        {
+        }
 
-		private PointInformation[] _pointInfo;
+        public void ClearPositions()
+        {
+        }
 
-		[SerializeField]
-		private SpawnOrder[] _spawnOrder;
+        private void PositionAssignedChanged(int point, int player)
+        {
+        }
 
-		private List<Actor> actorsToPin;
+        public int GetPointPlayerID(int point)
+        {
+            return 0;
+        }
 
-		private Coroutine pinRoutine;
+        public void StartPinRoutine()
+        {
+        }
 
-		public event Action OnPositionClear
-		{
-			[CompilerGenerated]
-			add
-			{
-			}
-			[CompilerGenerated]
-			remove
-			{
-			}
-		}
+        public void EndPinRoutine()
+        {
+        }
 
-		public event Action<int, int> OnPositionPlayerChanged
-		{
-			[CompilerGenerated]
-			add
-			{
-			}
-			[CompilerGenerated]
-			remove
-			{
-			}
-		}
+        [IteratorStateMachine(typeof(_003CPinBeastsRoutine_003Ed__37))]
+        public IEnumerator PinBeastsRoutine()
+        {
+            return null;
+        }
 
-		public event Action<int, int> OnPositionSet
-		{
-			[CompilerGenerated]
-			add
-			{
-			}
-			[CompilerGenerated]
-			remove
-			{
-			}
-		}
+        private struct PointInformation
+        {
+            private int _playerAssigned;
 
-		public event Action<int, int> OnPositionCleared
-		{
-			[CompilerGenerated]
-			add
-			{
-			}
-			[CompilerGenerated]
-			remove
-			{
-			}
-		}
+            private int _pointIndex;
 
-		private void Awake()
-		{
-		}
+            [CompilerGenerated] private Action<int, int> m__onAssignedChanged;
 
-		private void Start()
-		{
-		}
+            public int PlayerAssigned
+            {
+                get { return 0; }
+                set { }
+            }
 
-		private void LobbyPlayerManager_OnPlayerLeft(BaseUserInfo obj)
-		{
-		}
+            public int PointIndex => 0;
 
-		private bool Setup()
-		{
-			return false;
-		}
+            private event Action<int, int> _onAssignedChanged
+            {
+                [CompilerGenerated] add { }
+                [CompilerGenerated] remove { }
+            }
 
-		private void OnDestroy()
-		{
-		}
+            public PointInformation(int pointIndex, Action<int, int> onAssignedChanged) : this()
+            {
+                _playerAssigned = 0;
+                _pointIndex = 0;
+            }
 
-		public int GetLobbyBeastTeamCount()
-		{
-			return 0;
-		}
+            public void RefreshPoint()
+            {
+            }
+        }
 
-		private void BeastTeamChange(LocalPlayerInfomationCache player, int oldTeam)
-		{
-		}
+        [Serializable]
+        private struct SpawnOrder
+        {
+            public int[] Order;
 
-		private void OnlineBeastTeamChange(OnlinePlayerInfomationCache player, int oldTeam)
-		{
-		}
+            public SpawnOrder(int[] _order)
+            {
+                Order = null;
+            }
+        }
 
-		public void DespawnBeast(int playerID)
-		{
-		}
+        [CompilerGenerated]
+        private sealed class _003CPinBeastsRoutine_003Ed__37 : IEnumerator<object>, IEnumerator, IDisposable
+        {
+            private int _003C_003E1__state;
 
-		public void SpawnBeast(int playerID, int teamIndex)
-		{
-		}
+            private object _003C_003E2__current;
 
-		public int GetSpawn(int playerID, int teamIndex)
-		{
-			return 0;
-		}
+            public BeastMenuManager _003C_003E4__this;
 
-		public void ResetPositions()
-		{
-		}
+            [DebuggerHidden]
+            public _003CPinBeastsRoutine_003Ed__37(int _003C_003E1__state)
+            {
+            }
 
-		public void ClearPositions()
-		{
-		}
+            object IEnumerator<object>.Current
+            {
+                [DebuggerHidden] get { return null; }
+            }
 
-		private void PositionAssignedChanged(int point, int player)
-		{
-		}
+            object IEnumerator.Current
+            {
+                [DebuggerHidden] get { return null; }
+            }
 
-		public int GetPointPlayerID(int point)
-		{
-			return 0;
-		}
+            [DebuggerHidden]
+            void IDisposable.Dispose()
+            {
+            }
 
-		public void StartPinRoutine()
-		{
-		}
+            bool IEnumerator.MoveNext()
+            {
+                //ILSpy generated this explicit interface implementation from .override directive in MoveNext
+                return this.MoveNext();
+            }
 
-		public void EndPinRoutine()
-		{
-		}
+            [DebuggerHidden]
+            void IEnumerator.Reset()
+            {
+            }
 
-		[IteratorStateMachine(typeof(_003CPinBeastsRoutine_003Ed__37))]
-		public IEnumerator PinBeastsRoutine()
-		{
-			return null;
-		}
-	}
+            private bool MoveNext()
+            {
+                return false;
+            }
+        }
+    }
 }

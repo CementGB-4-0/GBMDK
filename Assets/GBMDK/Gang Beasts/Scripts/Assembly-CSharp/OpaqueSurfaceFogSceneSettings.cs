@@ -7,21 +7,11 @@ public class OpaqueSurfaceFogSceneSettings : MonoBehaviour
 
     public OpaqueSurfaceFogRendererFeature.OpaqueSurfaceFogSettings settings;
 
-    private void OnValidate()
+    private void Start()
     {
-        UpdateSettings();
     }
 
     private void UpdateSettings()
     {
-        if (rendererFeature)
-        {
-            rendererFeature.UpdateSettings(settings);
-            return;
-        }
-
-        Debug.Log(
-            "'rendererFeature' is unassigned - assign a reference to the current RenderPipeline's OpaqueSurfaceFogRendererFeature.",
-            this);
     }
 }
