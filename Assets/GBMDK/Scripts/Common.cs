@@ -2,6 +2,8 @@
 
 using System.IO;
 using UnityEditor;
+using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 
 namespace GBMDK.Editor
@@ -30,6 +32,17 @@ namespace GBMDK.Editor
             Selection.activeObject = scriptableObject;
 
             return scriptableObject;
+        }
+
+        public static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress)
+        {
+            var settings = AddressableAssetSettingsDefaultObject.Settings;
+            var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath), settings.DefaultGroup);
+            entry.SetAddress(assetAddress);
+
+            EditorUtility.SetDirty(settings);
+            AssetDatabase.SaveAssets();
+            return entry;
         }
     }
 }
