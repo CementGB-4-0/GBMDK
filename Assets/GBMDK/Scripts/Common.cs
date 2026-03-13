@@ -2,6 +2,8 @@
 
 using System.IO;
 using UnityEditor;
+using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 
 namespace GBMDK.Editor
@@ -19,15 +21,28 @@ namespace GBMDK.Editor
             return path;
         }
 
-        public static T CreateAndSaveScriptableObject<T>() where T : ScriptableObject
+        public static T CreateAndSaveScriptableObject<T>(string name = "") where T : ScriptableObject
         {
+            if (string.IsNullOrWhiteSpace(name)) name = $"New {typeof(T).Name}";
+            
             var scriptableObject = ScriptableObject.CreateInstance<T>();
-            AssetDatabase.CreateAsset(scriptableObject, GetCurrentSelectedAssetPath() + $"/New {typeof(T)}.asset");
+            AssetDatabase.CreateAsset(scriptableObject, GetCurrentSelectedAssetPath() + $"/{name}.asset");
             EditorUtility.SetDirty(scriptableObject);
-            Undo.RecordObject(scriptableObject, "CreateAndSaveScriptableObject");
+            Undo.RecordObject(scriptableObject, nameof(CreateAndSaveScriptableObject));
             Selection.activeObject = scriptableObject;
 
             return scriptableObject;
+        }
+
+        public static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress)
+        {
+            var settings = AddressableAssetSettingsDefaultObject.Settings;
+            var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath), settings.DefaultGroup);
+            entry.SetAddress(assetAddress);
+
+            EditorUtility.SetDirty(settings);
+            AssetDatabase.SaveAssets();
+            return entry;
         }
     }
 }

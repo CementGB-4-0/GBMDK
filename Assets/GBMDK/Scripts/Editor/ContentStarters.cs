@@ -18,17 +18,6 @@ namespace GBMDK.Editor
         public static string ActiveModPath =>
             $"Assets/Mods/{AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName")}";
 
-        private static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress)
-        {
-            var settings = AddressableAssetSettingsDefaultObject.Settings;
-            var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath), settings.DefaultGroup);
-            entry.SetAddress(assetAddress);
-
-            EditorUtility.SetDirty(settings);
-            AssetDatabase.SaveAssets();
-            return entry;
-        }
-
         [MenuItem("Assets/GBMDK/Starters/Costume Starter", priority = 10000)]
         public static void CostumeStarter()
         {
@@ -55,7 +44,7 @@ namespace GBMDK.Editor
             Object.DestroyImmediate(prefabTemplate);
             EditorUtility.SetDirty(prefab);
 
-            MarkAddressable(assetPath, Path.GetFileNameWithoutExtension(assetPath));
+            Common.MarkAddressable(assetPath, Path.GetFileNameWithoutExtension(assetPath));
 
             var costumeData = ScriptableObject.CreateInstance<CostumeObject>();
             costumeData.name = $"{prefab.name}-Data";
@@ -70,7 +59,7 @@ namespace GBMDK.Editor
             AssetDatabase.CreateAsset(costumeData, dataPath);
             EditorUtility.SetDirty(costumeData);
 
-            var addrEntryData = MarkAddressable(dataPath, Path.GetFileNameWithoutExtension(dataPath));
+            var addrEntryData = Common.MarkAddressable(dataPath, Path.GetFileNameWithoutExtension(dataPath));
             addrEntryData.labels.Add("CostumeItem");
 
             AssetDatabase.SaveAssets();
@@ -102,7 +91,7 @@ namespace GBMDK.Editor
             var newScene = SceneTemplateService.Instantiate(sceneTemplate, false, scenePath);
             EditorSceneManager.SaveScene(newScene.scene);
 
-            MarkAddressable(scenePath, Path.GetFileNameWithoutExtension(scenePath));
+            Common.MarkAddressable(scenePath, Path.GetFileNameWithoutExtension(scenePath));
 
             var sceneData = ScriptableObject.CreateInstance<SceneData>();
             sceneData.name = "NewMap-Data";
@@ -112,7 +101,7 @@ namespace GBMDK.Editor
             AssetDatabase.CreateAsset(sceneData, dataPath);
             EditorUtility.SetDirty(sceneData);
 
-            MarkAddressable(dataPath, Path.GetFileNameWithoutExtension(dataPath));
+            Common.MarkAddressable(dataPath, Path.GetFileNameWithoutExtension(dataPath));
 
             var sceneInfo = ScriptableObject.CreateInstance<CustomMapInfo>();
             sceneInfo.name = "NewMap-Info";
@@ -123,7 +112,7 @@ namespace GBMDK.Editor
 
             EditorUtility.FocusProjectWindow();
 
-            MarkAddressable(infoPath, Path.GetFileNameWithoutExtension(infoPath));
+            Common.MarkAddressable(infoPath, Path.GetFileNameWithoutExtension(infoPath));
 
             AssetDatabase.Refresh();
             Selection.activeObject = sceneData;
