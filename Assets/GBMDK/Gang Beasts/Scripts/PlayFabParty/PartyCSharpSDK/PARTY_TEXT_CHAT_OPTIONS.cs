@@ -1,0 +1,9 @@
+namespace PartyCSharpSDK
+{
+    public enum PARTY_TEXT_CHAT_OPTIONS : uint
+    {
+        PARTY_TEXT_CHAT_OPTIONS_NONE = 0u,
+        PARTY_TEXT_CHAT_OPTIONS_TRANSLATE_TO_LOCAL_LANGUAGE = 1u,
+        PARTY_TEXT_CHAT_OPTIONS_FILTER_OFFENSIVE_TEXT = 2u
+    }
+}

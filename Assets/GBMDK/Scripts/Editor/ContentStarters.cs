@@ -5,6 +5,7 @@ using GB.Data.Loading;
 using GB.Gamemodes;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.SceneManagement;
 using UnityEditor.SceneTemplate;
 using UnityEngine;
@@ -14,8 +15,21 @@ namespace GBMDK.Editor
 {
     public class ContentStarters
     {
-        public static void CreateCostumeStuff(string fallbackPath = null, string entryName = "NewCostume")
+        public static string ActiveModPath =>
+            $"Assets/Mods/{AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName")}";
+
+        [MenuItem("Assets/GBMDK/Starters/Costume Starter", priority = 10000)]
+        public static void CostumeStarter()
         {
+            CreateCostumeStuff($"{ActiveModPath}/Costumes/NewCostume");
+        }
+
+        public static void CreateCostumeStuff(string fallbackPath = null)
+        {
+            if (!AddressableAssetSettingsDefaultObject.SettingsExists)
+                EditorUtility.DisplayDialog("Addressables Nonexistent (Warning)",
+                    "Addressables Settings do not exist! You cannot perform this action.", "OK");
+
             var path = string.IsNullOrWhiteSpace(fallbackPath) ? Common.GetCurrentSelectedAssetPath() : fallbackPath;
             if (path == null) return;
 
@@ -23,10 +37,10 @@ namespace GBMDK.Editor
 
             var prefabTemplate =
                 PrefabUtility.LoadPrefabContents("Assets/GBMDK/Prefabs/Templates/CustomContent/HatTemplate.prefab");
-            var assetPath = $"{path}/{entryName}.prefab";
+            var assetPath = $"{path}/NewCostume.prefab";
             var prefab =
                 PrefabUtility.SaveAsPrefabAssetAndConnect(prefabTemplate, assetPath, InteractionMode.AutomatedAction);
-            prefab.name = entryName;
+            prefab.name = "NewCostume";
             Object.DestroyImmediate(prefabTemplate);
             EditorUtility.SetDirty(prefab);
 
@@ -46,14 +60,20 @@ namespace GBMDK.Editor
             EditorUtility.SetDirty(costumeData);
 
             var addrEntryData = Common.MarkAddressable(dataPath, Path.GetFileNameWithoutExtension(dataPath));
-            addrEntryData.labels.Add("Costume");
+            addrEntryData.labels.Add("CostumeItem");
 
             AssetDatabase.SaveAssets();
             EditorUtility.FocusProjectWindow();
             Selection.activeObject = costumeData;
         }
 
-        public static void CreateMapStuff(string fallbackPath = null, string entryName = "NewMap")
+        [MenuItem("Assets/GBMDK/Starters/Map Starter", priority = 10000)]
+        public static void MapStarter()
+        {
+            CreateMapStuff($"{ActiveModPath}/Maps/NewMap");
+        }
+
+        public static void CreateMapStuff(string fallbackPath = null)
         {
             if (!AddressableAssetSettingsDefaultObject.SettingsExists)
                 EditorUtility.DisplayDialog("Addressables Nonexistent (Warning)",
@@ -67,15 +87,15 @@ namespace GBMDK.Editor
             var sceneTemplate =
                 AssetDatabase.LoadAssetAtPath<SceneTemplateAsset>(
                     "Assets/GBMDK/Scenes/MapTemplate_Template.scenetemplate");
-            var scenePath = $"{path}/{entryName}.unity";
+            var scenePath = $"{path}/NewMap.unity";
             var newScene = SceneTemplateService.Instantiate(sceneTemplate, false, scenePath);
             EditorSceneManager.SaveScene(newScene.scene);
 
             Common.MarkAddressable(scenePath, Path.GetFileNameWithoutExtension(scenePath));
 
             var sceneData = ScriptableObject.CreateInstance<SceneData>();
-            sceneData.name = $"{entryName}-Data";
-            var dataPath = $"{path}/{entryName}-Data.asset";
+            sceneData.name = "NewMap-Data";
+            var dataPath = $"{path}/NewMap-Data.asset";
             typeof(SceneData).GetField("_sceneRef", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(sceneData,
                 new AssetReference(AssetDatabase.GUIDFromAssetPath(scenePath).ToString()));
             AssetDatabase.CreateAsset(sceneData, dataPath);
@@ -84,8 +104,8 @@ namespace GBMDK.Editor
             Common.MarkAddressable(dataPath, Path.GetFileNameWithoutExtension(dataPath));
 
             var sceneInfo = ScriptableObject.CreateInstance<CustomMapInfo>();
-            sceneInfo.name = $"{entryName}-Info";
-            var infoPath = $"{path}/{entryName}-Info.asset";
+            sceneInfo.name = "NewMap-Info";
+            var infoPath = $"{path}/NewMap-Info.asset";
             sceneInfo.allowedGamemodes = GameModeEnum.Melee;
             AssetDatabase.CreateAsset(sceneInfo, infoPath);
             EditorUtility.SetDirty(sceneInfo);

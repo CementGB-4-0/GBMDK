@@ -107,7 +107,7 @@ namespace GBMDK.Editor
 
         private static Material[] RetrieveMaterials()
         {
-            var allMats = Resources.FindObjectsOfTypeAll<Material>().Where(m => AssetDatabase.GetAssetPath(m).StartsWith("Assets"));
+            var allMats = Resources.FindObjectsOfTypeAll<Material>().Where(m => AssetDatabase.GetAssetPath(m)?.StartsWith("Assets") == true);
             return allMats.ToArray();
         }
 
