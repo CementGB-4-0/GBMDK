@@ -1,0 +1,8 @@
+namespace PartyCSharpSDK
+{
+    public enum PARTY_SYNTHESIZE_TEXT_TO_SPEECH_TYPE : uint
+    {
+        PARTY_SYNTHESIZE_TEXT_TO_SPEECH_TYPE_NARRATION = 0u,
+        PARTY_SYNTHESIZE_TEXT_TO_SPEECH_TYPE_VOICE_CHAT = 1u
+    }
+}

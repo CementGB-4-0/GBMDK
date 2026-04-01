@@ -1,0 +1,8 @@
+namespace PartyCSharpSDK
+{
+    public enum PARTY_INVITATION_REVOCABILITY : uint
+    {
+        PARTY_INVITATION_REVOCABILITY_CREATOR = 0u,
+        PARTY_INVITATION_REVOCABILITY_ANYONE = 1u
+    }
+}

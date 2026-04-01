@@ -24,11 +24,12 @@ namespace GBMDK.Editor
 
         public static T CreateAndSaveScriptableObject<T>(string name = "") where T : ScriptableObject
         {
-            if (string.IsNullOrWhiteSpace(name)) name = $"New {typeof(T).Name}.asset";
+            if (string.IsNullOrWhiteSpace(name)) name = $"New {typeof(T).Name}";
+            
             var scriptableObject = ScriptableObject.CreateInstance<T>();
-            AssetDatabase.CreateAsset(scriptableObject, GetCurrentSelectedAssetPath() + "/" + name);
+            AssetDatabase.CreateAsset(scriptableObject, GetCurrentSelectedAssetPath() + $"/{name}.asset");
             EditorUtility.SetDirty(scriptableObject);
-            Undo.RecordObject(scriptableObject, "CreateAndSaveScriptableObject");
+            Undo.RecordObject(scriptableObject, nameof(CreateAndSaveScriptableObject));
             Selection.activeObject = scriptableObject;
 
             return scriptableObject;

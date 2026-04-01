@@ -1,0 +1,8 @@
+{
+  "name": "PlayFabParty",
+  "references": [
+    "PlayFab",
+    "UnityEngine.UI"
+  ],
+  "allowUnsafeCode": true
+}

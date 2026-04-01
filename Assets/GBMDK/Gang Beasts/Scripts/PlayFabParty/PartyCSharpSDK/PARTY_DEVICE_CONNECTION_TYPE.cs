@@ -1,0 +1,8 @@
+namespace PartyCSharpSDK
+{
+    public enum PARTY_DEVICE_CONNECTION_TYPE : uint
+    {
+        PARTY_DEVICE_CONNECTION_TYPE_RELAY_SERVER = 0u,
+        PARTY_DEVICE_CONNECTION_TYPE_DIRECT_PEER_CONNECTION = 1u
+    }
+}

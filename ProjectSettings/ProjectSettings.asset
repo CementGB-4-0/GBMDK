@@ -664,7 +664,7 @@ PlayerSettings:
   apiCompatibilityLevel: 3
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 39848f19-bb83-4915-8516-cb4afbfcb371
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames:
   - Lowest
@@ -672,8 +672,8 @@ PlayerSettings:
   - Medium
   - High
   - Highest
-  projectName: Gang Beasts
-  organizationId: boneloaf
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 1
   playerDataPath: 

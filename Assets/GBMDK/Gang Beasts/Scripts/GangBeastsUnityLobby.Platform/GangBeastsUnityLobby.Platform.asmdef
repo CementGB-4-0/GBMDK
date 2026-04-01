@@ -1,0 +1,11 @@
+{
+  "name": "GangBeastsUnityLobby.Platform",
+  "references": [
+    "Coatsink.Platform",
+    "CS.CorePlatform",
+    "Unity.Services.Lobbies",
+    "Unity.Networking.Transport",
+    "Unity.Services.Relay"
+  ],
+  "allowUnsafeCode": true
+}

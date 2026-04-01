@@ -14,8 +14,21 @@ namespace GBMDK.Editor
 {
     public class ContentStarters
     {
+        public static string ActiveModPath =>
+            $"Assets/Mods/{AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName")}";
+
+        [MenuItem("Assets/GBMDK/Starters/Costume Starter", priority = 10000)]
+        public static void CostumeStarter()
+        {
+            CreateCostumeStuff($"{ActiveModPath}/Costumes/NewCostume");
+        }
+
         public static void CreateCostumeStuff(string fallbackPath = null, string entryName = "NewCostume")
         {
+            if (!AddressableAssetSettingsDefaultObject.SettingsExists)
+                EditorUtility.DisplayDialog("Addressables Nonexistent (Warning)",
+                    "Addressables Settings do not exist! You cannot perform this action.", "OK");
+
             var path = string.IsNullOrWhiteSpace(fallbackPath) ? Common.GetCurrentSelectedAssetPath() : fallbackPath;
             if (path == null) return;
 
@@ -26,14 +39,14 @@ namespace GBMDK.Editor
             var assetPath = $"{path}/{entryName}.prefab";
             var prefab =
                 PrefabUtility.SaveAsPrefabAssetAndConnect(prefabTemplate, assetPath, InteractionMode.AutomatedAction);
-            prefab.name = entryName;
+            prefab.name = $"{entryName}";
             Object.DestroyImmediate(prefabTemplate);
             EditorUtility.SetDirty(prefab);
 
             Common.MarkAddressable(assetPath, Path.GetFileNameWithoutExtension(assetPath));
 
             var costumeData = ScriptableObject.CreateInstance<CostumeObject>();
-            costumeData.name = $"{prefab.name}-Data";
+            costumeData.name = $"{entryName}-Data";
             costumeData.PrimaryPart = CostumeParts.Head;
             costumeData.Unlocked = true;
             costumeData.Enabled = true;
@@ -51,6 +64,12 @@ namespace GBMDK.Editor
             AssetDatabase.SaveAssets();
             EditorUtility.FocusProjectWindow();
             Selection.activeObject = costumeData;
+        }
+
+        [MenuItem("Assets/GBMDK/Starters/Map Starter", priority = 10000)]
+        public static void MapStarter()
+        {
+            CreateMapStuff($"{ActiveModPath}/Maps/NewMap");
         }
 
         public static void CreateMapStuff(string fallbackPath = null, string entryName = "NewMap")
