@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Template name="NextGBMDKModGroup"
+                 src="project://database/Assets/GBMDK/Scripts/Editor/UI/Config/NextGBMDKModGroup.uxml?fileID=9197481963319205126&amp;guid=75e66747fb3308e43b92810e0f12db15&amp;type=3#NextGBMDKModGroup"/>
+    <ui:GroupBox>
+        <ui:TextField picking-mode="Ignore" label="Game Folder Path" name="GameFolderPathFld"/>
+        <ui:Button text="Browse" display-tooltip-when-elided="true" name="BrowseGameFolderBtn"/>
+    </ui:GroupBox>
+    <ui:Foldout text="Mod Settings" name="ModSettingsContainer">
+        <ui:ScrollView>
+            <ui:Instance template="NextGBMDKModGroup" name="NextGBMDKModGroup"/>
+            <ui:Instance template="NextGBMDKModGroup" name="NextGBMDKModGroup"/>
+        </ui:ScrollView>
+    </ui:Foldout>
+</ui:UXML>

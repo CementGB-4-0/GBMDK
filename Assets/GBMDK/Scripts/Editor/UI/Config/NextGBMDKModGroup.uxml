@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:GroupBox>
+        <ui:TextField picking-mode="Ignore" value="filler text" text="NewMod" name="ModNameFld"/>
+        <ui:RadioButton label="Active Mod" name="ActiveModToggle"/>
+        <ui:GroupBox>
+            <ui:Foldout text="Content" name="ModContentContainer"/>
+        </ui:GroupBox>
+    </ui:GroupBox>
+</ui:UXML>
