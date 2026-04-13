@@ -12,12 +12,13 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
-using Object = UnityEngine.Object;
 
 namespace GBMDK.Editor
 {
     public class ShaderViewer : ScriptableSingleton<ShaderViewer>
     {
+        private static UniTask? _curHandle;
+
         [FormerlySerializedAs("CachedShaders")]
         public List<Shader> cachedShaders = new();
 
@@ -102,12 +103,15 @@ namespace GBMDK.Editor
 
         private async UniTask OnAsyncLoop()
         {
-            await instance.DoApplyingAddressableShaders();
+            while (_curHandle != null)
+                await UniTask.DelayFrame(1);
+            _curHandle ??= instance.DoApplyingAddressableShaders();
         }
 
         private static Material[] RetrieveMaterials()
         {
-            var allMats = Resources.FindObjectsOfTypeAll<Material>().Where(m => AssetDatabase.GetAssetPath(m)?.StartsWith("Assets") == true);
+            var allMats = Resources.FindObjectsOfTypeAll<Material>()
+                .Where(m => AssetDatabase.GetAssetPath(m)?.StartsWith("Assets") == true);
             return allMats.ToArray();
         }
 
@@ -117,14 +121,16 @@ namespace GBMDK.Editor
             var ret = new List<Shader>();
             foreach (var key in catalog.Keys)
             {
-                catalog.Locate(key, typeof(Object), out var list);
+                catalog.Locate(key, typeof(Shader), out var list);
                 if (list == null) continue;
                 foreach (var obj in list)
                 {
                     try
                     {
-                        if (obj.ResourceType != typeof(Shader)) continue;
-                        var shaderAsset = await Addressables.LoadAssetAsync<Shader>(obj);
+                        if (obj.ResourceType != typeof(Shader) || (!obj.InternalId.EndsWith(".shader") &&
+                                                                   !obj.InternalId.EndsWith(".shadergraph"))) continue;
+                        var shaderAssetHandle = Addressables.LoadAssetAsync<Shader>(obj).ToUniTask();
+                        var shaderAsset = await shaderAssetHandle;
                         shaderAsset.hideFlags = HideFlags.DontSave;
                         ret.Add(shaderAsset);
                         //Debug.Log($"Loaded shader of name \"{shaderAsset.name}\"");
@@ -152,7 +158,7 @@ namespace GBMDK.Editor
             {
                 //var assetPath = AssetDatabase.GetAssetPath(dm);
                 //Debug.Log(assetPath);
-                
+
                 Shader chosenShader = null;
                 foreach (var sh in shaders)
                     if (sh.name == dm.shader.name)
@@ -168,19 +174,21 @@ namespace GBMDK.Editor
             }
 
             DisposeTempCatalog(catalog);
+            _curHandle = null;
         }
 
         private async UniTask<IResourceLocator> LoadTempCatalog()
         {
             if (!File.Exists(CatalogPath)) throw new FileNotFoundException(CatalogPath);
-            var catalogText = await File.ReadAllTextAsync(CatalogPath);
+            var origCatalogLines = await File.ReadAllTextAsync(CatalogPath).AsUniTask();
             var catalogDirPath = Path.GetDirectoryName(CatalogPath)?.Replace(@"\", @"\\");
-            catalogText = catalogText.Replace("{UnityEngine.AddressableAssets.Addressables.RuntimePath}",
+            var catalogText = origCatalogLines
+                .Replace("{UnityEngine.AddressableAssets.Addressables.RuntimePath}",
                     catalogDirPath)
                 .Replace("{MelonLoader.Utils.MelonEnvironment.ModsDirectory}", catalogDirPath);
             var tempCatalog = Path.GetTempFileName();
             await File.WriteAllTextAsync(tempCatalog, catalogText);
-            var catalog = await Addressables.LoadContentCatalogAsync(tempCatalog, true);
+            var catalog = await Addressables.LoadContentCatalogAsync(tempCatalog, true).ToUniTask();
             Addressables.AddResourceLocator(catalog);
             return catalog;
         }
