@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "73a63b7f672b88f7e9992f6917eb458a8cbb6fa9"
+      "hash": "a9e27c03d411d2fca01cc7410c24c97cd77cb539"
     },
     "com.laurenth.lightingtools-lightprobesvolumes": {
       "version": "2018.1.2",
@@ -125,7 +125,7 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.39",
+      "version": "3.0.40",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -134,11 +134,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.23",
+      "version": "2.0.27",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.9"
+        "com.unity.test-framework": "1.1.33"
       },
       "url": "https://packages.unity.com"
     },
