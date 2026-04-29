@@ -15,7 +15,7 @@ namespace FizzSDK.QuickAssetMigrator
         private const string AssetMigratorRepository = "https://github.com/Fizzyhex/asset_migrator_extsdk";
         private const string ConversionOutputFolderName = "ConversionOutput";
         private static bool _shouldMigrateScripts;
-        private static bool _shouldMigrateShaders = true;
+        private static bool _shouldMigrateShaders;
         private static bool _shouldMigratePlugins;
         private static string _sourceFolder;
         private readonly List<string> _selectedAssets = new();

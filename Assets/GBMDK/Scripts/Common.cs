@@ -4,6 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
+using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEngine;
 
 namespace GBMDK.Editor
@@ -34,10 +35,25 @@ namespace GBMDK.Editor
             return scriptableObject;
         }
 
-        public static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress)
+        public static AddressableAssetGroup CreateOrFindAddressableAssetGroup(AddressableAssetSettings settings,
+            string groupName, bool setAsDefault=false)
+        {
+            var group = settings.FindGroup(groupName);
+            if (group != null) return group;
+            group = settings.CreateGroup(groupName, setAsDefault, false, true, null, typeof(ContentUpdateGroupSchema),
+                typeof(BundledAssetGroupSchema));
+            EditorUtility.SetDirty(group);
+            return group;
+        }
+
+        public static AddressableAssetEntry MarkAddressable(string assetPath, string assetAddress, string groupName = "")
         {
             var settings = AddressableAssetSettingsDefaultObject.Settings;
-            var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath), settings.DefaultGroup);
+            AssetDatabase.RenameAsset(assetPath, assetAddress);
+            var entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath),
+                CreateOrFindAddressableAssetGroup(settings, string.IsNullOrWhiteSpace(groupName) ?
+                    AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
+                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName") : groupName));
             entry.SetAddress(assetAddress);
 
             EditorUtility.SetDirty(settings);
