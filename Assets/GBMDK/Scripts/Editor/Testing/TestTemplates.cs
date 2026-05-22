@@ -12,17 +12,12 @@ namespace GBMDK.Editor
         {
             ContentStarters.CreateMapStuff($"Assets/Mods/{TemplateModName}/Maps/NewMap");
             ContentStarters.CreateCostumeStuff($"Assets/Mods/{TemplateModName}/Costumes/NewCostume");
-            var prevModName = AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
-                AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName");
-            AddressableAssetSettingsDefaultObject.Settings.profileSettings.SetValue(
-                AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName", $"{TemplateModName}");
-            AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming =
-                $"{TemplateModName}";
+            var prevModName = GBMDKConfigSettings.ActiveModName;
+            GBMDKConfigSettings.ActiveModName = TemplateModName;
+            AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming = $"{TemplateModName}";
             ModTester.TestMod();
-            AddressableAssetSettingsDefaultObject.Settings.profileSettings.SetValue(
-                AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName", prevModName);
-            AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming =
-                $"{prevModName}";
+            GBMDKConfigSettings.ActiveModName = prevModName;
+            AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming = $"{prevModName}";
             AssetDatabase.DeleteAsset($"Assets/Mods/{TemplateModName}");
         }
     }

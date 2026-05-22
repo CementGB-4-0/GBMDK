@@ -23,10 +23,7 @@ namespace GBMDK.Editor
 
             var activeModNameFld = new TextField("Active Mod Name")
             {
-                value = AddressableAssetSettingsDefaultObject.SettingsExists
-                    ? AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
-                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName")
-                    : ""
+                value = GBMDKConfigSettings.ActiveModName
             };
             if (AddressableAssetSettingsDefaultObject.SettingsExists)
                 AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming = activeModNameFld.value;
@@ -34,11 +31,9 @@ namespace GBMDK.Editor
             activeModNameFld.RegisterValueChangedCallback(evt =>
             {
                 if (!AddressableAssetSettingsDefaultObject.SettingsExists) return;
-                AddressableAssetSettingsDefaultObject.Settings.profileSettings.SetValue(
-                    AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName", evt.newValue);
+                GBMDKConfigSettings.ActiveModName = evt.newValue;
                 AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming =
-                    AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
-                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName");
+                    GBMDKConfigSettings.ActiveModName;
             });
 
             var gamePathBtn = new Button(() =>
@@ -93,8 +88,7 @@ namespace GBMDK.Editor
             if (AddressableAssetSettingsDefaultObject.SettingsExists)
             {
                 AddressableAssetSettingsDefaultObject.Settings.ShaderBundleCustomNaming =
-                    AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(
-                        AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModName");
+                    GBMDKConfigSettings.ActiveModName;
                 EditorUtility.SetDirty(AddressableAssetSettingsDefaultObject.Settings);
             }
         }
